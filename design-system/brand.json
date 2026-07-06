@@ -1,0 +1,140 @@
+{
+  "name": "CodeGraphLabs",
+  "tagline": "Structure does the talking. Slate carries every surface, border, and line of text. Crimson exists to mark the one thing that matters.",
+  "description": "A restrained design system using Slate for structure and a single Crimson element per screen for signature accent. Hierarchy comes from weight, not size.",
+  "sourceUrl": "designmd://design-md-personal-brand-system",
+  "logo": {
+    "primary": "assets/logo.svg",
+    "alternates": [
+      "assets/logo-mark.svg"
+    ],
+    "notes": "Node graph and text wordmark matching the uploaded concept image."
+  },
+  "colors": [
+    {
+      "role": "background",
+      "hex": "#ffffff",
+      "oklch": "",
+      "name": "Base White",
+      "usage": "page canvas"
+    },
+    {
+      "role": "surface",
+      "hex": "#f7f8fa",
+      "oklch": "",
+      "name": "Subtle Off-White",
+      "usage": "cards and panels"
+    },
+    {
+      "role": "foreground",
+      "hex": "#1c2029",
+      "oklch": "",
+      "name": "Slate 900",
+      "usage": "primary text and headings"
+    },
+    {
+      "role": "muted",
+      "hex": "#8a90a2",
+      "oklch": "",
+      "name": "Slate 400",
+      "usage": "muted or disabled text"
+    },
+    {
+      "role": "border",
+      "hex": "#dfe2ea",
+      "oklch": "",
+      "name": "Slate 100",
+      "usage": "rules and dividers"
+    },
+    {
+      "role": "accent",
+      "hex": "#c81d25",
+      "oklch": "",
+      "name": "Crimson 600",
+      "usage": "signature accent, primary CTA, key stat, section divider"
+    },
+    {
+      "role": "accent-secondary",
+      "hex": "#2b3040",
+      "oklch": "",
+      "name": "Slate 800",
+      "usage": "secondary actions and emphasis"
+    }
+  ],
+  "typography": {
+    "display": {
+      "family": "Manrope",
+      "fallbacks": [
+        "system-ui",
+        "-apple-system",
+        "sans-serif"
+      ],
+      "weights": [
+        400,
+        600,
+        700
+      ]
+    },
+    "body": {
+      "family": "Manrope",
+      "fallbacks": [
+        "system-ui",
+        "-apple-system",
+        "sans-serif"
+      ],
+      "weights": [
+        400,
+        600,
+        700
+      ]
+    },
+    "mono": {
+      "family": "Source Code Pro",
+      "fallbacks": [
+        "monospace"
+      ],
+      "weights": [
+        400,
+        600
+      ]
+    }
+  },
+  "voice": {
+    "adjectives": [
+      "restrained",
+      "engineered",
+      "structured",
+      "purposeful"
+    ],
+    "tone": "Direct and structured. Let the hierarchy and structure do the talking. Keep it feeling engineered rather than decorated.",
+    "messagingPillars": [
+      "Structure does the talking.",
+      "Scarcity gives value to emphasis."
+    ],
+    "vocabulary": {
+      "use": [],
+      "avoid": [
+        "round and friendly",
+        "playful",
+        "decorative"
+      ]
+    }
+  },
+  "imagery": {
+    "style": "",
+    "subjects": [],
+    "treatment": "",
+    "avoid": [],
+    "samples": []
+  },
+  "layout": {
+    "radius": "8px max, tight scale 2/4/6/8px",
+    "borderWeight": "1px",
+    "spacing": "8px baseline grid",
+    "postureRules": [
+      "Nothing rounder than 8px.",
+      "Hierarchy comes from weight (600-700), not dramatic size jumps.",
+      "One crimson element per screen or slide. Three is decoration."
+    ]
+  }
+}

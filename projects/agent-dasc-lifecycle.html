@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent-DASC Product Lifecycle | Case Study — Azharuddin Kazi</title>
+  <meta name="description" content="Technical walkthrough of Agent-DASC, a Data Analytics Software Consultant Agent. Focus on the software design lifecycle and SQL synthesis RAG framework based on Google's DS-STAR paper." />
+  
+  <!-- CSS Variables & Fonts from Design System (Parent directory relative paths) -->
+  <link rel="stylesheet" href="../design-system/fonts/fonts.css" />
+  <link rel="stylesheet" href="../design-system/system/variables.css" />
+
+  <style>
+    :root {
+      --display-family: 'Manrope', system-ui, -apple-system, sans-serif;
+      --code-family: 'Source Code Pro', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--brand-font-family);
+      font-size: var(--brand-font-size);
+      line-height: var(--brand-line-height);
+      color: var(--brand-color-text);
+      background-color: var(--brand-color-bg-layout);
+      -webkit-font-smoothing: antialiased;
+      transition: background-color var(--brand-motion-duration-slow) var(--brand-motion-ease-in-out), 
+                  color var(--brand-motion-duration-slow) var(--brand-motion-ease-in-out);
+    }
+
+    a {
+      color: var(--brand-color-link);
+      text-decoration: none;
+      transition: color var(--brand-motion-duration-fast);
+    }
+
+    a:hover {
+      color: var(--brand-color-link-hover);
+    }
+
+    /* Strict Radius Scale: Max 8px */
+    .radius-sm { border-radius: var(--brand-border-radius-xs); }
+    .radius-md { border-radius: var(--brand-border-radius-sm); }
+    .radius-lg { border-radius: var(--brand-border-radius); }
+
+    /* Typography Constraints (Weight over Size) */
+    h1, h2, h3, h4, h5 {
+      font-family: var(--display-family);
+      font-weight: 700;
+      color: var(--brand-color-text);
+      line-height: var(--brand-line-height-heading);
+    }
+
+    .kicker {
+      font-family: var(--brand-font-family);
+      font-size: var(--brand-font-size-sm);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--brand-color-primary);
+      margin-bottom: var(--brand-size-xs);
+    }
+
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding-left: clamp(20px, 5vw, 40px);
+      padding-right: clamp(20px, 5vw, 40px);
+    }
+
+    .section {
+      padding: clamp(48px, 6vh, 80px) 0;
+      border-bottom: var(--brand-line-width) solid var(--brand-color-border-secondary);
+    }
+
+    /* Header Nav */
+    header.sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: color-mix(in srgb, var(--brand-color-bg-container) 85%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: var(--brand-line-width) solid var(--brand-color-border-secondary);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .brand-logo {
+      font-family: var(--code-family);
+      font-weight: 700;
+      font-size: var(--brand-font-size-lg);
+      letter-spacing: -0.02em;
+      color: var(--brand-color-text);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--brand-size-sm);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--brand-font-family);
+      font-weight: 600;
+      font-size: var(--brand-font-size-sm);
+      height: var(--brand-control-height);
+      padding: 0 var(--brand-size);
+      border-radius: var(--brand-border-radius);
+      border: var(--brand-line-width) solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--brand-motion-duration-mid) var(--brand-motion-ease-in-out);
+    }
+
+    .btn-secondary {
+      background-color: var(--brand-color-bg-container);
+      border-color: var(--brand-color-border);
+      color: var(--brand-color-text);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--brand-color-fill-secondary);
+    }
+
+    .theme-toggle-btn {
+      background: none;
+      border: none;
+      color: var(--brand-color-text-secondary);
+      cursor: pointer;
+      padding: var(--brand-size-xxs);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--brand-border-radius-xs);
+    }
+
+    /* Case Study Layout */
+    .cs-header {
+      padding-top: clamp(40px, 5vh, 72px);
+      padding-bottom: clamp(32px, 4vh, 56px);
+      border-bottom: var(--brand-line-width) solid var(--brand-color-border);
+    }
+
+    .cs-title {
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: -0.02em;
+      margin-top: var(--brand-size-xs);
+    }
+
+    .cs-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--brand-size-lg);
+      margin-top: var(--brand-size-xl);
+    }
+
+    .cs-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .cs-meta-label {
+      font-size: var(--brand-font-size-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-color-text-secondary);
+      font-weight: 700;
+    }
+
+    .cs-meta-val {
+      font-size: var(--brand-font-size);
+      font-weight: 600;
+      color: var(--brand-color-text);
+    }
+
+    /* Body Text & Grid */
+    .cs-grid {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: var(--brand-size-xxl);
+      align-items: start;
+    }
+
+    .cs-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--brand-size-xl);
+    }
+
+    .cs-content p {
+      font-size: var(--brand-font-size-lg);
+      color: var(--brand-color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .cs-content h3 {
+      font-size: var(--brand-font-size-heading-5);
+      font-weight: 700;
+      margin-top: var(--brand-size-lg);
+    }
+
+    .cs-content ul, .cs-content ol {
+      padding-left: var(--brand-size-lg);
+      color: var(--brand-color-text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: var(--brand-size-xs);
+    }
+
+    /* Code block styling using Source Code Pro */
+    pre {
+      background-color: var(--brand-color-bg-container);
+      border: var(--brand-line-width) solid var(--brand-color-border);
+      padding: var(--brand-size-lg);
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: var(--code-family);
+      font-size: var(--brand-font-size-sm);
+      line-height: 1.5;
+      color: var(--brand-color-text);
+    }
+
+    .token-comment { color: var(--brand-color-text-tertiary); }
+    .token-keyword { color: var(--brand-color-primary); font-weight: 700; }
+    .token-string { color: var(--brand-color-text-secondary); }
+
+    /* Callout Card (Exactly 1 Crimson line/element in the side column) */
+    .side-card {
+      background-color: var(--brand-color-bg-container);
+      border: var(--brand-line-width) solid var(--brand-color-border);
+      padding: var(--brand-size-xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--brand-size-sm);
+    }
+
+    .side-card-accent {
+      border-left: 3px solid var(--brand-color-primary);
+      padding-left: var(--brand-size-sm);
+    }
+
+    /* Visual Diagram styling in project */
+    .g-visual {
+      border: var(--brand-line-width) solid var(--brand-color-border);
+      background-color: var(--brand-color-bg-container);
+      height: 240px;
+      overflow: hidden;
+      margin: var(--brand-size-lg) 0;
+    }
+
+    @media (max-width: 860px) {
+      .cs-meta-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .cs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Nav -->
+  <header class="sticky-nav">
+    <div class="wrap nav-container">
+      <div class="brand-logo">
+        AK.AGENT-DASC
+      </div>
+      <div class="nav-actions">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-toggle-btn radius-sm" aria-label="Toggle theme">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path class="sun-icon" d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" style="display: none;"></path>
+            <path class="sun-icon" d="M3 12h1M20 12h1M12 3v1M12 20v1" style="display: none;"></path>
+            <path class="moon-icon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <a href="../index.html" class="btn btn-secondary radius-lg">&larr; Back to Home</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Hero Block -->
+    <div class="cs-header">
+      <span class="kicker">Case Study · Agentic Framework</span>
+      <h1 class="cs-title">Agent-DASC: Automating the Data Science Product Lifecycle</h1>
+      
+      <div class="cs-meta-grid">
+        <div class="cs-meta-item">
+          <div class="cs-meta-label">ARCHITECTURE</div>
+          <div class="cs-meta-val">Google DS-STAR Paper</div>
+        </div>
+        <div class="cs-meta-item">
+          <div class="cs-meta-label">FOCUS</div>
+          <div class="cs-meta-val">Planning &amp; Verification</div>
+        </div>
+        <div class="cs-meta-item">
+          <div class="cs-meta-label">STATUS</div>
+          <div class="cs-meta-val">Docs / Development</div>
+        </div>
+        <div class="cs-meta-item">
+          <div class="cs-meta-label">OUTCOME</div>
+          <!-- Exactly one primary color text inside metadata highlight -->
+          <div class="cs-meta-val" style="color: var(--brand-color-primary);">Autonomous Consulting</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case Study Body -->
+    <div class="section cs-grid">
+      <article class="cs-content">
+        <h3>1. Concept & Google DS-STAR Foundations</h3>
+        <p>
+          <strong>Agent-DASC</strong> (Data Analytics Software Consultant) is an autonomous data science agent modeled on the core architecture of the **Google DS-STAR** research paper (*"DS-STAR: Data Science Agent via Iterative Planning and Verification"*). 
+        </p>
+        <p>
+          Rather than relying on single-shot LLM queries to build scripts, DS-STAR establishes a structured multi-agent loop that mimics human data scientists. It automates analysis over heterogeneous data formats, designs step-by-step query programs, executes them in sandboxes, and validates outputs using rigorous verification checks.
+        </p>
+
+        <div class="g-visual radius-lg">
+          <!-- Flow diagram inside project subpage -->
+          <svg width="100%" height="100%" viewBox="0 0 400 240">
+            <g stroke="var(--brand-color-border)" stroke-width="1.5" opacity="0.6">
+              <line x1="80" y1="120" x2="160" y2="120"></line>
+              <line x1="160" y1="120" x2="240" y2="120"></line>
+              <line x1="240" y1="120" x2="320" y2="120"></line>
+              <!-- Feedback loop path -->
+              <path d="M320,120 C240,190 160,190 80,120" fill="none" stroke="var(--brand-color-primary)" stroke-width="2" stroke-dasharray="3 3"></path>
+            </g>
+            <g fill="var(--brand-color-text)" opacity="0.8">
+              <circle cx="80" cy="120" r="8"></circle>
+              <circle cx="160" cy="120" r="8"></circle>
+              <circle cx="240" cy="120" r="8"></circle>
+              <circle cx="320" cy="120" r="8"></circle>
+            </g>
+            <text x="50" y="100" font-family="var(--code-family)" font-size="9" fill="var(--brand-color-text-secondary)">1. Planner Agent</text>
+            <text x="140" y="100" font-family="var(--code-family)" font-size="9" fill="var(--brand-color-text-secondary)">2. Coder Agent</text>
+            <text x="215" y="100" font-family="var(--code-family)" font-size="9" fill="var(--brand-color-text-secondary)">3. Debugger Agent</text>
+            <text x="290" y="100" font-family="var(--code-family)" font-size="9" fill="var(--brand-color-text-secondary)">4. Verifier Agent</text>
+            <text x="156" y="195" font-family="var(--code-family)" font-size="10" font-weight="700" fill="var(--brand-color-primary)">DS-STAR Iterative Feedback</text>
+          </svg>
+        </div>
+
+        <h3>2. Multi-Agent Pipeline Mechanics</h3>
+        <p>
+          Following Google's DS-STAR framework, Agent-DASC divides processing duties across five specialized agent components:
+        </p>
+        <ol style="padding-left: 20px; display: flex; flex-direction: column; gap: 8px;">
+          <li><strong>Analyzer:</strong> Inspects heterogeneous datasets (CSV, JSON, Excel, markdown) to extract structure and statistics.</li>
+          <li><strong>Planner:</strong> Formulates a structured, multi-step logical execution plan.</li>
+          <li><strong>Coder:</strong> Translates plan items into executable Python, generating SQL operations and analysis code.</li>
+          <li><strong>Debugger:</strong> Captures execution errors in sandbox loops and performs automatic refactoring.</li>
+          <li><strong>Verifier:</strong> Act as an LLM-based judge to evaluate output validity against the original requirements, refining the plan if the score falls below threshold parameters.</li>
+        </ol>
+
+        <h3>3. Implementation Details</h3>
+        <p>
+          The implementation of the DS-STAR-based planning and verification agent uses structured schemas to validate code executions. Below is a code block showing the execution wrapper:
+        </p>
+
+        <pre class="radius-lg"><code><span class="token-keyword">class</span> <span class="token-keyword">DSStarAgent</span>:
+    <span class="token-keyword">def</span> <span class="token-keyword">__init__</span>(self, database, model):
+        self.planner = PlannerAgent(model)
+        self.coder = CoderAgent(model)
+        self.verifier = VerifierAgent(model)
+
+    <span class="token-keyword">def</span> <span class="token-keyword">solve_query</span>(self, user_query):
+        plan = self.planner.generate_plan(user_query)
+        result = self.coder.execute_steps(plan)
+        
+        <span class="token-comment"># Iterative verification check</span>
+        verdict = self.verifier.judge(result, user_query)
+        <span class="token-keyword">if</span> verdict[<span class="token-string">"status"</span>] == <span class="token-string">"FAILED"</span>:
+            plan = self.planner.refine_plan(plan, verdict[<span class="token-string">"reason"</span>])
+            result = self.coder.execute_steps(plan)
+        <span class="token-keyword">return</span> result</code></pre>
+
+        <h3>4. Documenting Product Lifecycle (SOPs)</h3>
+        <p>
+          The repository's <code>docs/product-lifecycle</code> branch maps the Standard Operating Procedures (SOPs) required to maintain and evaluate agent workflows in production:
+        </p>
+        <ul>
+          <li><strong>Prompt Governance:</strong> Tracking system prompts and few-shot stores through pipeline versioning.</li>
+          <li><strong>Relational DB Mapping:</strong> Schema embedding generation to locate correct columns across databases containing hundreds of tables.</li>
+          <li><strong>Drift Monitoring:</strong> Auto-evaluation of verifier accuracy against expert-approved baseline datasets.</li>
+        </ul>
+      </article>
+
+      <aside class="cs-sidebar">
+        <div class="side-card radius-lg">
+          <div class="side-card-accent">
+            <h4 style="font-size: var(--brand-font-size); font-weight: 700;">GITHUB REPOSITORY</h4>
+            <p style="font-size: var(--brand-font-size-sm); color: var(--brand-color-text-secondary); margin-top: 4px;">
+              Access code, design templates, and DS-STAR documentation on GitHub.
+            </p>
+          </div>
+          <hr style="border: none; border-top: var(--brand-line-width) solid var(--brand-color-border-secondary)" />
+          <a href="https://github.com/AzharuddinKazi/Agent-DASC/tree/docs/product-lifecycle" target="_blank" class="btn btn-secondary radius-lg" style="width: 100%;">View GitHub Repository</a>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer style="margin-top: 80px;">
+    <div class="wrap footer-container">
+      <div>
+        &copy; 2026 Azharuddin Kazi. Agent-DASC Documentation.
+      </div>
+      <div>
+        <a href="../index.html">Back to Portfolio</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle Logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const sunIcons = document.querySelectorAll('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+    
+    // Check local storage or defaults
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+      document.body.classList.add('dark');
+      moonIcon.style.display = 'none';
+      sunIcons.forEach(i => i.style.display = 'block');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      
+      if (isDark) {
+        localStorage.setItem('theme', 'dark');
+        moonIcon.style.display = 'none';
+        sunIcons.forEach(i => i.style.display = 'block');
+      } else {
+        localStorage.setItem('theme', 'light');
+        moonIcon.style.display = 'block';
+        sunIcons.forEach(i => i.style.display = 'none');
+      }
+    });
+  </script>
+</body>
+</html>

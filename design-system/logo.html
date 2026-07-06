@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CodeGraphLabs — Logo</title>
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f7f8fa;
+      --fg: #1c2029;
+      --muted: #8a90a2;
+      --border: #dfe2ea;
+      --accent: #c81d25;
+      --accent-secondary: #2b3040;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+      background: var(--surface);
+      color: var(--fg);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 40px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 56px 48px;
+    }
+    .panel--light {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px 4px 0 0;
+    }
+    .panel--dark {
+      background: var(--fg);
+    }
+    .panel--sizes {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-top: 0;
+      border-radius: 0 0 4px 4px;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-end;
+      gap: 40px;
+      padding: 40px 48px;
+    }
+
+    .size-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .size-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .size-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    svg { display: block; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Light background lockup -->
+    <div class="panel panel--light">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 110" width="460" height="110" role="img" aria-label="CodeGraphLabs">
+        <!-- Faint perimeter polygon -->
+        <path d="M55,20 L84,33 L90,63 L79,85 L27,83 L19,54 Z"
+              fill="none" stroke="#dfe2ea" stroke-width="1.5"/>
+        <!-- Primary connections -->
+        <g stroke="#1c2029" stroke-width="2.5" stroke-linecap="round">
+          <line x1="55" y1="55" x2="55" y2="20"/>
+          <line x1="55" y1="55" x2="84" y2="33"/>
+          <line x1="55" y1="55" x2="90" y2="63"/>
+          <line x1="55" y1="55" x2="79" y2="85"/>
+          <line x1="55" y1="55" x2="27" y2="83"/>
+          <line x1="55" y1="55" x2="19" y2="54"/>
+        </g>
+        <!-- Nodes -->
+        <g fill="#1c2029">
+          <circle cx="55"  cy="55"  r="13"/>
+          <circle cx="55"  cy="20"  r="7"/>
+          <circle cx="84"  cy="33"  r="5.5"/>
+          <circle cx="90"  cy="63"  r="5"/>
+          <circle cx="79"  cy="85"  r="7"/>
+          <circle cx="27"  cy="83"  r="10"/>
+          <circle cx="19"  cy="54"  r="5"/>
+        </g>
+        <!-- Wordmark -->
+        <text x="120" y="68" font-family="'Source Code Pro', monospace, sans-serif" font-size="42" letter-spacing="-0.5">
+          <tspan fill="#1c2029" font-weight="600">codegraph</tspan><tspan fill="#c81d25" font-weight="400">labs</tspan>
+        </text>
+      </svg>
+    </div>
+
+    <!-- Dark background lockup -->
+    <div class="panel panel--dark">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 110" width="460" height="110" role="img" aria-label="CodeGraphLabs">
+        <!-- Faint perimeter polygon -->
+        <path d="M55,20 L84,33 L90,63 L79,85 L27,83 L19,54 Z"
+              fill="none" stroke="#2b3040" stroke-width="1.5"/>
+        <!-- Primary connections -->
+        <g stroke="#ffffff" stroke-width="2.5" stroke-linecap="round">
+          <line x1="55" y1="55" x2="55" y2="20"/>
+          <line x1="55" y1="55" x2="84" y2="33"/>
+          <line x1="55" y1="55" x2="90" y2="63"/>
+          <line x1="55" y1="55" x2="79" y2="85"/>
+          <line x1="55" y1="55" x2="27" y2="83"/>
+          <line x1="55" y1="55" x2="19" y2="54"/>
+        </g>
+        <!-- Nodes -->
+        <g fill="#ffffff">
+          <circle cx="55"  cy="55"  r="13"/>
+          <circle cx="55"  cy="20"  r="7"/>
+          <circle cx="84"  cy="33"  r="5.5"/>
+          <circle cx="90"  cy="63"  r="5"/>
+          <circle cx="79"  cy="85"  r="7"/>
+          <circle cx="27"  cy="83"  r="10"/>
+          <circle cx="19"  cy="54"  r="5"/>
+        </g>
+        <!-- Wordmark — "codegraph" in white, "labs" stays crimson -->
+        <text x="120" y="68" font-family="'Source Code Pro', monospace, sans-serif" font-size="42" letter-spacing="-0.5">
+          <tspan fill="#ffffff" font-weight="600">codegraph</tspan><tspan fill="#c81d25" font-weight="400">labs</tspan>
+        </text>
+      </svg>
+    </div>
+
+    <!-- Icon-only at multiple sizes -->
+    <div class="panel panel--sizes">
+
+      <!-- 180px -->
+      <div class="size-col">
+        <div class="size-box" style="width:180px;height:180px;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="6 6 88 88" width="148" height="148" role="img" aria-label="CodeGraphLabs mark">
+            <path d="M50,15 L79,28 L85,58 L74,80 L22,78 L14,49 Z"
+                  fill="none" stroke="#dfe2ea" stroke-width="1.5"/>
+            <g stroke="#1c2029" stroke-width="2.5" stroke-linecap="round">
+              <line x1="50" y1="50" x2="50" y2="15"/>
+              <line x1="50" y1="50" x2="79" y2="28"/>
+              <line x1="50" y1="50" x2="85" y2="58"/>
+              <line x1="50" y1="50" x2="74" y2="80"/>
+              <line x1="50" y1="50" x2="22" y2="78"/>
+              <line x1="50" y1="50" x2="14" y2="49"/>
+            </g>
+            <g fill="#1c2029">
+              <circle cx="50"  cy="50"  r="13"/>
+              <circle cx="50"  cy="15"  r="7"/>
+              <circle cx="79"  cy="28"  r="5.5"/>
+              <circle cx="85"  cy="58"  r="5"/>
+              <circle cx="74"  cy="80"  r="7"/>
+              <circle cx="22"  cy="78"  r="10"/>
+              <circle cx="14"  cy="49"  r="5"/>
+            </g>
+          </svg>
+        </div>
+        <span class="size-label">180px</span>
+      </div>
+
+      <!-- 32px — faint connections omitted at small size -->
+      <div class="size-col">
+        <div class="size-box" style="width:64px;height:64px;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="6 6 88 88" width="32" height="32" role="img" aria-label="CodeGraphLabs mark">
+            <g stroke="#1c2029" stroke-width="4" stroke-linecap="round">
+              <line x1="50" y1="50" x2="50" y2="15"/>
+              <line x1="50" y1="50" x2="79" y2="28"/>
+              <line x1="50" y1="50" x2="85" y2="58"/>
+              <line x1="50" y1="50" x2="74" y2="80"/>
+              <line x1="50" y1="50" x2="22" y2="78"/>
+              <line x1="50" y1="50" x2="14" y2="49"/>
+            </g>
+            <g fill="#1c2029">
+              <circle cx="50"  cy="50"  r="13"/>
+              <circle cx="50"  cy="15"  r="7"/>
+              <circle cx="79"  cy="28"  r="6"/>
+              <circle cx="85"  cy="58"  r="5.5"/>
+              <circle cx="74"  cy="80"  r="7"/>
+              <circle cx="22"  cy="78"  r="10"/>
+              <circle cx="14"  cy="49"  r="5.5"/>
+            </g>
+          </svg>
+        </div>
+        <span class="size-label">32px</span>
+      </div>
+
+      <!-- 16px — simplified, 4 main nodes only -->
+      <div class="size-col">
+        <div class="size-box" style="width:48px;height:48px;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="6 6 88 88" width="16" height="16" role="img" aria-label="CodeGraphLabs mark">
+            <g stroke="#1c2029" stroke-width="7" stroke-linecap="round">
+              <line x1="50" y1="50" x2="50" y2="15"/>
+              <line x1="50" y1="50" x2="79" y2="28"/>
+              <line x1="50" y1="50" x2="74" y2="80"/>
+              <line x1="50" y1="50" x2="22" y2="78"/>
+            </g>
+            <g fill="#1c2029">
+              <circle cx="50"  cy="50"  r="14"/>
+              <circle cx="50"  cy="15"  r="8"/>
+              <circle cx="79"  cy="28"  r="7"/>
+              <circle cx="74"  cy="80"  r="8"/>
+              <circle cx="22"  cy="78"  r="11"/>
+            </g>
+          </svg>
+        </div>
+        <span class="size-label">16px</span>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+</html>

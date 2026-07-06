@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Azharuddin Kazi | Specialist Data Scientist & AI Advisor</title>
+  <meta name="description" content="Personal portfolio and blog of Azharuddin Kazi, Specialist Data Scientist in financial supervision and risk modeling. Experienced AI & Data consultant." />
+  
+  <!-- CSS Variables & Fonts from Design System -->
+  <link rel="stylesheet" href="design-system/fonts/fonts.css" />
+  <link rel="stylesheet" href="design-system/system/variables.css" />
+
+  <style>
+    :root {
+      --display-family: 'Manrope', system-ui, -apple-system, sans-serif;
+      --code-family: 'Source Code Pro', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--brand-font-family);
+      font-size: var(--brand-font-size);
+      line-height: var(--brand-line-height);
+      color: var(--brand-color-text);
+      background-color: var(--brand-color-bg-layout);
+      -webkit-font-smoothing: antialiased;
+      transition: background-color var(--brand-motion-duration-slow) var(--brand-motion-ease-in-out), 
+                  color var(--brand-motion-duration-slow) var(--brand-motion-ease-in-out);
+    }
+
+    a {
+      color: var(--brand-color-link);
+      text-decoration: none;
+      transition: color var(--brand-motion-duration-fast);
+    }
+
+    a:hover {
+      color: var(--brand-color-link-hover);
+    }
+
+    /* Strict Radius Scale: Max 8px */
+    .radius-sm { border-radius: var(--brand-border-radius-xs); } /* 3px */
+    .radius-md { border-radius: var(--brand-border-radius-sm); } /* 5px */
+    .radius-lg { border-radius: var(--brand-border-radius); }    /* 8px */
+
+    /* Typography Constraints (Weight over Size) */
+    h1, h2, h3, h4, h5 {
+      font-family: var(--display-family);
+      font-weight: 700;
+      color: var(--brand-color-text);
+      line-height: var(--brand-line-height-heading);
+    }
+
+    .kicker {
+      font-family: var(--brand-font-family);
+      font-size: var(--brand-font-size-sm);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--brand-color-primary);
+      margin-bottom: var(--brand-size-xs);
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding-left: clamp(20px, 5vw, 40px);
+      padding-right: clamp(20px, 5vw, 40px);
+    }
+
+    .section {
+      padding: clamp(64px, 8vh, 112px) 0;
+      border-bottom: var(--brand-line-width) solid var(--brand-color-border-secondary);
+    }
+
+    .section-head {
+      max-width: 680px;
+      margin-bottom: var(--brand-size-xxl);
+    }
+
+    .section-title {
+      font-size: var(--brand-font-size-heading-3);
+      letter-spacing: -0.015em;
+      margin-top: var(--brand-size-xxs);
+    }
+
+    .section-desc {
+      color: var(--brand-color-text-secondary);
+      font-size: var(--brand-font-size-lg);
+      margin-top: var(--brand-size-sm);
+    }
+
+    /* Navigation Header */
+    header.sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: color-mix(in srgb, var(--brand-color-bg-container) 85%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: var(--brand-line-width) solid var(--brand-color-border-secondary);
+      transition: background var(--brand-motion-duration-slow);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .brand-logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .brand-logo-svg {
+      height: 28px;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--brand-size-xl);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: var(--brand-font-size);
+      font-weight: 600;
+      color: var(--brand-color-text-secondary);
+      transition: color var(--brand-motion-duration-fast);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--brand-color-text);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--brand-size-sm);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--brand-font-family);
+      font-weight: 600;
+      font-size: var(--brand-font-size-sm);
+      height: var(--brand-control-height);
+      padding: 0 var(--brand-size);
+      border-radius: var(--brand-border-radius); /* 8px max */
+      border: var(--brand-line-width) solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--brand-motion-duration-mid) var(--brand-motion-ease-in-out);
+    }
+
+    .btn-secondary {
+      background-color: var(--brand-color-bg-container);
+      border-color: var(--brand-color-border);
+      color: var(--brand-color-text);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--brand-color-fill-secondary);
+      border-color: var(--brand-color-text-quaternary);
+    }
+
+    /* Primary Button is EXACTLY our Crimson element when used */
+    .btn-primary {
+      background-color: var(--brand-color-primary);
+      color: #ffffff;
+      border-color: var(--brand-color-primary);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--brand-color-primary-hover);
+      border-color: var(--brand-color-primary-hover);
+    }
+
+    .btn-primary:active {
+      background-color: var(--brand-color-primary-active);
+      border-color: var(--brand-color-primary-active);
+    }
+
+    /* Theme Switcher Toggle styling */
+    .theme-toggle-btn {
+      background: none;
+      border: none;
+      color: var(--brand-color-text-secondary);
+      cursor: pointer;
+      padding: var(--brand-size-xxs);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--brand-border-radius-xs);
+      transition: color var(--brand-motion-duration-fast);
+    }
+
+    .theme-toggle-btn:hover {
+      color: var(--brand-color-text);
+    }
+
+    /* Hero Section Visuals */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: var(--brand-size-xxl);
+      align-items: center;
+      padding-top: clamp(48px, 6vh, 96px);
+      padding-bottom: clamp(48px, 6vh, 96px);
+    }
+
+    .hero-content h1 {
+      font-size: clamp(32px, 4.5vw, 48px);
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+    }
+
+    .hero-description {
+      font-size: var(--brand-font-size-lg);
+      color: var(--brand-color-text-secondary);
+      margin-top: var(--brand-size-md);
+      margin-bottom: var(--brand-size-xl);
+      max-width: 580px;
+    }
+
+    /* Visual Image in Hero (Generated Brand visual, radius max 8px) */
+    .hero-visual {
+      border: var(--brand-line-width) solid var(--brand-color-border);
+      background-color: var(--brand-color-bg-container);
+      height: 320px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+    }
+
+    /* Key Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--brand-size-lg);
+    }
+
+    .stat-card {
+      background-color: var(--brand-color-bg-container);
+      border: var(--brand-line-width) solid var(--brand-color-border);
+      padding: var(--brand-size-xl);
+      transition: transform var(--brand-motion-duration-mid);
+    }
+
+    .stat-num {
+      font-size: var(--brand-font-size-heading-1);
+      font-family: var(--display-family);
+      font-weight: 700;
+      color: var(--brand-color-text);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: var(--brand-font-size-sm);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-color-text-secondary);
+      margin-top: var(--brand-size-xs);
+    }
+
+    .stat-desc {
+      font-size: var(--brand-font-size);
+      color: var(--brand-color-text-secondary);
+      margin-top: var(--brand-size-sm);
+      line-height: 1.5;
+    }
+
+    /* Timeline Section */
+    .timeline {
+      position: relative;
+      margin-top: var(--brand-size-xxl);
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: var(--brand-color-border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 48px;
+      margin-bottom: var(--brand-size-xxl);
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: 8px;
+      top: 6px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: var(--brand-color-bg-layout);
+      border: 2px solid var(--brand-color-text-secondary);
+      z-index: 2;
+      transition: all var(--brand-motion-duration-mid);
+    }
+
+    .timeline-item.active .timeline-marker {
+      border-color: var(--brand-color-primary);
+      background-color: var(--brand-color-primary);
+      box-shadow: 0 0 0 4px var(--brand-color-primary-bg);
+    }
+
+    .timeline-date {
+      font-family: var(--code-family);
+      font-size: var(--brand-font-size-sm);
+      font-weight: 600;
+      color: var(--brand-color-text-secondary);
+    }
+
+    .timeline-title {
+      font-size: var(--brand-font-size-heading-5);
+      font-weight: 700;
+      margin-top: var(--brand-size-xxs);
+    }
+
+    .timeline-org {
+      font-size: var(--brand-font-size);
+      font-weight: 600;
+      color: var(--brand-color-text-secondary);
+      margin-top: 2px;
+    }
+
+    .timeline-content {
+      margin-top: var(--brand-size-sm);
+      color: var(--brand-color-text-secondary);
+      max-width: 780px;
+    }
+
+    .timeline-bullets {
+      margin-top: var(--brand-size-xs);
+      padding-left: var(--brand-size);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .timeline-bullets li {
+      font-size: var(--brand-font-size);
+      color: var(--brand-color-text-secondary);
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--brand-size-xs);
+      margin-top: var(--brand-size-sm);
+    }
+
+    .tag {
+      font-family: var(--code-family);
+      font-size: var(--brand-font-size-sm);
+      color: var(--brand-color-text-secondary);
+      background-color: var(--brand-color-fill-secondary);
+      padding: 2px 8px;
+      border-radius: var(--brand-border-radius-xs);
+      border: var(--brand-line-width) solid var(--brand-color-border);
+    }
+
+    /* Single Project Feature Card */
+    .project-showcase {
+      background-color: var(--brand-color-bg-container);
+      border: var(--brand-line-width) solid var(--brand-color-border);
+      padding: var(--brand-size-xxl);
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: var(--brand-size-xl);
+      align-items: center;
+    }
+
+    .project-info {
+      display: flex;
+      flex-direction: column;
+      gap: var(--brand-size-sm);
+    }
+
+    .project-visual-preview {
+      border: var(--brand-line-width) solid var(--brand-color-border);
+      background-color: var(--brand-color-fill-quaternary);
+      padding: var(--brand-size-lg);
+      font-family: var(--code-family);
+      font-size: var(--brand-font-size-sm);
+      color: var(--brand-color-text-secondary);
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Contact Form styling */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: var(--brand-size-xxl);
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: var(--brand-size-xl);
+    }
+
+    .contact-method {
+      display: flex;
+      flex-direction: column;
+      gap: var(--brand-size-xxs);
+    }
+
+    .contact-method-title {
+      font-weight: 700;
+      font-size: var(--brand-font-size);
+    }
+
+    .contact-method-value {
+      color: var(--brand-color-text-secondary);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--brand-size-lg);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--brand-size-lg);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--brand-size-xs);
+    }
+
+    .form-label {
+      font-weight: 600;
+      font-size: var(--brand-font-size-sm);
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      font-family: var(--brand-font-family);
+      font-size: var(--brand-font-size);
+      height: 38px;
+      padding: 0 var(--brand-size-sm);
+      background-color: var(--brand-color-bg-container);
+      border: var(--brand-line-width) solid var(--brand-color-border);
+      border-radius: var(--brand-border-radius-sm);
+      color: var(--brand-color-text);
+      outline: none;
+      transition: border-color var(--brand-motion-duration-fast);
+    }
+
+    .form-textarea {
+      height: 110px;
+      padding: var(--brand-size-sm);
+      resize: vertical;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      border-color: var(--brand-color-primary) !important;
+      box-shadow: 0 0 0 3px var(--brand-color-primary-bg);
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background-color: rgba(28, 32, 41, 0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--brand-motion-duration-slow) var(--brand-motion-ease-in-out);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-width: 680px;
+      height: 100%;
+      background-color: var(--brand-color-bg-layout);
+      border-left: var(--brand-line-width) solid var(--brand-color-border);
+      box-shadow: -8px 0 32px rgba(28, 32, 41, 0.15);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform var(--brand-motion-duration-slow) var(--brand-motion-ease-out);
+    }
+
+    .modal-overlay.open .modal-sheet {
+      transform: translateX(0);
+    }
+
+    .modal-header {
+      height: 64px;
+      border-bottom: var(--brand-line-width) solid var(--brand-color-border-secondary);
+      background-color: var(--brand-color-bg-container);
+      padding: 0 var(--brand-size-xl);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: var(--brand-color-text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--brand-border-radius-xs);
+    }
+
+    .modal-close:hover {
+      color: var(--brand-color-text);
+      background-color: var(--brand-color-fill-secondary);
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--brand-size-xxl) var(--brand-size-xl);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--brand-color-bg-container);
+      padding: var(--brand-size-xl) 0;
+      border-top: var(--brand-line-width) solid var(--brand-color-border);
+      font-size: var(--brand-font-size-sm);
+      color: var(--brand-color-text-secondary);
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 860px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-visual {
+        order: -1;
+        height: 240px;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .project-showcase {
+        grid-template-columns: 1fr;
+      }
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1 · NAVBAR HEADER (With Adaptive CodeGraphLabs Logo) -->
+  <header class="sticky-nav">
+    <div class="wrap nav-container">
+      <a href="#" class="brand-logo-link" aria-label="CodeGraphLabs">
+        <svg class="brand-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 110" role="img">
+          <!-- Perimeter polygon -->
+          <path class="logo-perimeter" d="M55,20 L84,33 L90,63 L79,85 L27,83 L19,54 Z"
+                fill="none" stroke="var(--brand-color-border)" stroke-width="1.5"/>
+          <!-- Connections -->
+          <g stroke="var(--brand-color-text)" stroke-width="2.5" stroke-linecap="round">
+            <line x1="55" y1="55" x2="55" y2="20"/>
+            <line x1="55" y1="55" x2="84" y2="33"/>
+            <line x1="55" y1="55" x2="90" y2="63"/>
+            <line x1="55" y1="55" x2="79" y2="85"/>
+            <line x1="55" y1="55" x2="27" y2="83"/>
+            <line x1="55" y1="55" x2="19" y2="54"/>
+          </g>
+          <!-- Nodes -->
+          <g fill="var(--brand-color-text)">
+            <circle cx="55"  cy="55"  r="13"/>
+            <circle cx="55"  cy="20"  r="7"/>
+            <circle cx="84"  cy="33"  r="5.5"/>
+            <circle cx="90"  cy="63"  r="5"/>
+            <circle cx="79"  cy="85"  r="7"/>
+            <circle cx="27"  cy="83"  r="10"/>
+            <circle cx="19"  cy="54"  r="5"/>
+          </g>
+          <!-- Wordmark -->
+          <text x="120" y="68" font-family="'Source Code Pro', monospace" font-size="42" letter-spacing="-0.5">
+            <tspan fill="var(--brand-color-text)" font-weight="600">codegraph</tspan><tspan fill="var(--brand-color-primary)" font-weight="400">labs</tspan>
+          </text>
+        </svg>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#about" class="active">Overview</a></li>
+          <li><a href="#timeline">Career</a></li>
+          <li><a href="#portfolio">Project</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-toggle-btn radius-sm" aria-label="Toggle theme">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path class="sun-icon" d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" style="display: none;"></path>
+            <path class="sun-icon" d="M3 12h1M20 12h1M12 3v1M12 20v1" style="display: none;"></path>
+            <path class="moon-icon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <a href="#contact" class="btn btn-secondary radius-lg">Consultation</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 2 · HERO SECTION -->
+    <section id="about" class="section wrap" style="border-bottom: none;">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <span class="kicker">Specialist Data Scientist</span>
+          <h1>Engineering decision support frameworks for complex regulatory data.</h1>
+          <p class="hero-description">
+            Seasoned Data Science Professional with 7 years of experience in delivering analytical solutions and decision support across diverse business sectors. Currently working as a Specialist Data Scientist within a federal regulatory body in the UAE.
+          </p>
+          <div style="display: flex; gap: var(--brand-size-sm);">
+            <!-- The Singular Crimson Accent Element on this initial view is the primary CTA button -->
+            <a href="#portfolio" class="btn btn-primary radius-lg">Explore Featured Project</a>
+            <a href="#timeline" class="btn btn-secondary radius-lg">View Professional Career</a>
+          </div>
+        </div>
+        <div class="hero-visual radius-lg">
+          <!-- Render generated high-quality abstract tech illustration instead of graph SVGs -->
+          <img src="assets/hero-visual.png" alt="Abstract data science and machine learning visualization grid" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · METRICS & STATS SECTION -->
+    <section class="section wrap">
+      <div class="stats-grid">
+        <div class="stat-card radius-lg">
+          <div class="stat-num">7 Years</div>
+          <div class="stat-label">Data Science Career</div>
+          <div class="stat-desc">Providing predictive models, forecasts, and AI strategies for government, corporate, and digital entities.</div>
+        </div>
+        <div class="stat-card radius-lg">
+          <div class="stat-num">4+ Cloud Certs</div>
+          <div class="stat-label">Engineering Focus</div>
+          <div class="stat-desc">Google Cloud Associate Engineer, Digital Leader, Dataiku ML Practitioner, and Core Designer certified.</div>
+        </div>
+        <div class="stat-card radius-lg">
+          <!-- Singular Crimson element on screen -->
+          <div class="stat-num" style="color: var(--brand-color-primary);">ML, DS &amp; Gen AI</div>
+          <div class="stat-label">Core Specialization</div>
+          <div class="stat-desc">Engineering statistical algorithms, forecasting systems, and LLM-based agentic workflows.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · CAREER TIMELINE (Reflecting azhar_resume.md + March 2026 Deloitte tenure) -->
+    <section id="timeline" class="section wrap">
+      <div class="section-head">
+        <span class="kicker">Experience</span>
+        <h2 class="section-title">A career built on enterprise data architecture</h2>
+        <p class="section-desc">Delivering advanced machine learning, forecasting, and AI systems.</p>
+      </div>
+
+      <div class="timeline">
+        <!-- Current regulatory body role -->
+        <div class="timeline-item active">
+          <div class="timeline-marker"></div>
+          <div class="timeline-date">MARCH 2026 — PRESENT</div>
+          <h3 class="timeline-title">Specialist Data Scientist — Fraud Prevention & Supervision</h3>
+          <div class="timeline-org">UAE Financial Regulatory Authority | Dubai/Abu Dhabi, UAE</div>
+          <p class="timeline-content">
+            Design, deploy, and evaluate surveillance algorithms and supervision frameworks for domestic entities. Focus areas include:
+          </p>
+          <ul class="timeline-bullets">
+            <li>High-throughput transaction anomaly classification and network flow modeling.</li>
+            <li>Advising on risk frameworks and data governance models across domestic banking systems.</li>
+            <li>Supervising machine learning risk parameters and validating compliance scorecards.</li>
+          </ul>
+          <div class="timeline-tags">
+            <span class="tag">Financial Supervision</span>
+            <span class="tag">Systemic Risk</span>
+            <span class="tag">Graph Analytics</span>
+            <span class="tag">ML Governance</span>
+          </div>
+        </div>
+
+        <!-- Deloitte role (updated ending date to March 2026) -->
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-date">JUNE 2022 — MARCH 2026</div>
+          <h3 class="timeline-title">Senior Consultant, Engineering AI & Data</h3>
+          <div class="timeline-org">Deloitte &amp; Touché (M.E) | Dubai, UAE</div>
+          <p class="timeline-content">
+            Delivered advanced AI solutions and digital transformation roadmaps for government and corporate clients:
+          </p>
+          <ul class="timeline-bullets">
+            <li>Implemented a Gen AI, RAG-based chat application for a government entity leveraging Dubai's open datasets, enabling natural language queries with responses generated through LlamaIndex Text-to-SQL.</li>
+            <li>Led the implementation of MLOps, compared the client's setup with industry best practices, and developed plans to improve their machine learning deployment.</li>
+            <li>Designed and implemented cardholder personas through analysis of transaction data for customers across Saudi Arabia (KSA), driving enhancements in customer experience and service personalization.</li>
+            <li>Carried out an employee turnover study with limited data, discovering important insights using Dataiku that helped shape the client's data science strategy.</li>
+            <li>Assisted in the upgrade of NEOM's marketing systems, identifying key areas for improvement and planning strategic upgrades.</li>
+            <li>Contributed to AI strategy development for government and private sector clients, defining AI governance frameworks and identifying high-impact AI use cases.</li>
+          </ul>
+          <div class="timeline-tags">
+            <span class="tag">Generative AI</span>
+            <span class="tag">LlamaIndex</span>
+            <span class="tag">Text-to-SQL</span>
+            <span class="tag">MLOps</span>
+            <span class="tag">Dataiku</span>
+          </div>
+        </div>
+
+        <!-- Nabler role -->
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-date">OCTOBER 2019 — MAY 2022</div>
+          <h3 class="timeline-title">Senior Data Scientist</h3>
+          <div class="timeline-org">Nabler Web Solutions | Bangalore, India</div>
+          <p class="timeline-content">
+            Led consumer analytics and marketing forecasting engagements:
+          </p>
+          <ul class="timeline-bullets">
+            <li>Improved leads conversion rate by 30% by developing a propensity model on clickstream data that learns to differentiate between high and low propensity users visiting the website based on their behavior.</li>
+            <li>Built 10+ forecasting models to track 6 website KPIs and a system that notifies relevant stakeholders of any significant changes in KPI values depending on set business rules.</li>
+            <li>Implemented leads forecasting models that led to over a 20% increase in meeting leads acquisition goals.</li>
+          </ul>
+          <div class="timeline-tags">
+            <span class="tag">Propensity Modeling</span>
+            <span class="tag">FB Prophet</span>
+            <span class="tag">Time Series (ARIMA)</span>
+            <span class="tag">GCP AI Platform</span>
+          </div>
+        </div>
+
+        <!-- DXC role -->
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-date">DECEMBER 2017 — OCTOBER 2019</div>
+          <h3 class="timeline-title">Technology Consultant</h3>
+          <div class="timeline-org">DXC Technology | Bangalore, India</div>
+          <p class="timeline-content">
+            Engineered predictive planning systems and proofs of concept:
+          </p>
+          <ul class="timeline-bullets">
+            <li>Developed a demand forecasting solution identifying an opportunity to increase the market share of a logistics company by 15% by building Monte Carlo simulations that simulate the flow of product throughout the country.</li>
+            <li>Built a PoC showcasing capabilities of voice analytics and its application in call center management.</li>
+          </ul>
+          <div class="timeline-tags">
+            <span class="tag">Monte Carlo Simulation</span>
+            <span class="tag">Logistics Optimization</span>
+            <span class="tag">Voice Analytics PoC</span>
+            <span class="tag">R Programming</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · FEATURED PROJECT (Agent-DASC) -->
+    <section id="portfolio" class="section wrap">
+      <div class="section-head">
+        <span class="kicker">Featured Project</span>
+        <h2 class="section-title">Agent-DASC: Agentic Data Analytics Software Consultant</h2>
+        <p class="section-desc">An agentic AI framework based on Google's DS-STAR architecture, automating complex data science workflows.</p>
+      </div>
+
+      <div class="project-showcase radius-lg">
+        <div class="project-info">
+          <span class="tag" style="align-self: flex-start; border-color: var(--brand-color-primary); color: var(--brand-color-primary); font-weight: 700;">ACTIVE DEVELOPMENT</span>
+          <h3 style="font-size: var(--brand-font-size-heading-4); margin: var(--brand-size-xs) 0 var(--brand-size-sm)">Agent-DASC Architecture</h3>
+          <p style="color: var(--brand-color-text-secondary); margin-bottom: var(--brand-size-md); line-height: 1.5">
+            Agent-DASC is modeled directly on the <strong>Google DS-STAR agentic framework</strong>. It automates multi-step, heterogeneous data science tasks by coordinating specialized agents (Planner, Coder, Debugger, and Verifier) in iterative loops. The system plans actions, compiles executables, debugging runtime issues autonomously, and validates outputs using custom judgment verification layers to handle unstructured queries.
+          </p>
+          <div style="display: flex; gap: var(--brand-size-sm); flex-wrap: wrap;">
+            <!-- Singular Crimson Accent Element on this view is the link button -->
+            <a href="projects/agent-dasc-lifecycle.html" class="btn btn-primary radius-lg">Read Technical Design Handoff</a>
+            <a href="https://github.com/AzharuddinKazi/Agent-DASC/tree/docs/product-lifecycle" target="_blank" class="btn btn-secondary radius-lg">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              View GitHub Repo
+            </a>
+          </div>
+        </div>
+
+        <div class="project-visual-preview radius-lg">
+          <div>
+            <div style="font-family: var(--code-family); color: var(--brand-color-primary); font-weight: 700; margin-bottom: var(--brand-size-xs)">[DS-STAR PIPELINE]</div>
+            <div style="font-family: var(--code-family); line-height: 1.4; color: var(--brand-color-text-secondary)">
+              &gt; Loading Google DS-STAR agent pipeline...<br />
+              &gt; Action: Planner initiated &rarr; step execution<br />
+              &gt; Executing Code: py_run_task()...<br />
+              &gt; Status: Verifier evaluating outputs... OK.
+            </div>
+          </div>
+          <div style="border-top: var(--brand-line-width) dashed var(--brand-color-border); padding-top: var(--brand-size-sm); font-size: 11px; display: flex; justify-content: space-between; align-items: center">
+            <span>Branch: docs/product-lifecycle</span>
+            <span style="color: var(--brand-color-text);">Status: 200 OK</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · BLOGPOST SECTION (Emptied for now per request) -->
+    <section id="blog" class="section wrap">
+      <div class="section-head">
+        <span class="kicker">Insights &amp; Writings</span>
+        <h2 class="section-title">Technical documentation, case studies, and engineering briefs</h2>
+        <p class="section-desc">Reflections on building analytics agents, risk architectures, and data frameworks.</p>
+      </div>
+
+      <!-- Clean design system-compliant Empty State -->
+      <div style="border: var(--brand-line-width) dashed var(--brand-color-border); padding: var(--brand-size-xxl) var(--brand-size-xl); text-align: center;" class="radius-lg">
+        <p style="color: var(--brand-color-text-secondary); font-size: var(--brand-font-size-lg);">Technical articles and documentation are currently in preparation.</p>
+        <p style="color: var(--brand-color-text-tertiary); font-size: var(--brand-font-size-sm); margin-top: var(--brand-size-xs)">Check back soon for briefs on model governance, DS-STAR execution cycles, and analytics pipelines.</p>
+      </div>
+    </section>
+
+    <!-- 7 · CONTACT SECTION (Removed Current Office) -->
+    <section id="contact" class="section wrap" style="border-bottom: none;">
+      <div class="section-head">
+        <span class="kicker">Get in Touch</span>
+        <h2 class="section-title">Schedule an AI supervision consult or panel session</h2>
+        <p class="section-desc">Available for technical roundtables, expert advisory panels, and specialized risk consulting.</p>
+      </div>
+
+      <div class="contact-layout">
+        <div class="contact-info">
+          <div class="contact-method">
+            <div class="contact-method-title">ONLINE PRESENCE</div>
+            <div class="contact-method-value">
+              <a href="mailto:azharuddin.raz.kazi@gmail.com">azharuddin.raz.kazi@gmail.com</a><br />
+              <a href="https://linkedin.com/in/azhar-kazi">linkedin.com/in/azhar-kazi</a><br />
+              <a href="https://github.com/AzharuddinKazi">github.com/AzharuddinKazi</a>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('Inquiry successfully simulated! In production, this form routes details to Azharuddin.');">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="contact-name">Full Name</label>
+              <input type="text" id="contact-name" class="form-input" placeholder="e.g. Dr. Emily Carter" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contact-email">Email Address</label>
+              <input type="email" id="contact-email" class="form-input" placeholder="e.g. emily@entity.gov" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-org">Organization / Institution</label>
+            <input type="text" id="contact-org" class="form-input" placeholder="e.g. Commercial Bank or Regulatory Authority" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-service">Inquiry Purpose</label>
+            <select id="contact-service" class="form-select">
+              <option value="consult">Fraud Supervision Consultation</option>
+              <option value="advisory">Advisory &amp; Strategy Panel</option>
+              <option value="academic">Research &amp; Speaking Engagement</option>
+              <option value="other">General Query</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-message">Inquiry Details</label>
+            <textarea id="contact-message" class="form-textarea" placeholder="Detail your specific supervision query, data requirements, or panel scope..." required></textarea>
+          </div>
+
+          <!-- Exactly one Crimson primary element: The Submit Button -->
+          <button type="submit" class="btn btn-primary radius-lg" style="align-self: flex-start; padding: 0 var(--brand-size-xl); height: 42px;">Submit Inquiry</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- 8 · FOOTER -->
+  <footer>
+    <div class="wrap footer-container">
+      <div>
+        &copy; 2026 Azharuddin Kazi. All rights reserved. Deployed using the CodeGraphLabs Brand Specification.
+      </div>
+      <div style="display: flex; gap: var(--brand-size-lg)">
+        <a href="#about">Overview</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#portfolio">Project</a>
+        <a href="#blog">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle Logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const sunIcons = document.querySelectorAll('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+    
+    // Check local storage or defaults
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+      document.body.classList.add('dark');
+      moonIcon.style.display = 'none';
+      sunIcons.forEach(i => i.style.display = 'block');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      
+      if (isDark) {
+        localStorage.setItem('theme', 'dark');
+        moonIcon.style.display = 'none';
+        sunIcons.forEach(i => i.style.display = 'block');
+      } else {
+        localStorage.setItem('theme', 'light');
+        moonIcon.style.display = 'block';
+        sunIcons.forEach(i => i.style.display = 'none');
+      }
+    });
+
+    // Navigation Active class linking logic
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let scrollY = window.pageYOffset;
+      sections.forEach(current => {
+        const sectionHeight = current.offsetHeight;
+        const sectionTop = current.offsetTop - 100;
+        const sectionId = current.getAttribute('id');
+
+        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${sectionId}`) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

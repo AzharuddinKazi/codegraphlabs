@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 110" width="460" height="110">
+  <!-- Faint perimeter polygon connecting outer nodes -->
+  <path d="M55,20 L84,33 L90,63 L79,85 L27,83 L19,54 Z"
+        fill="none" stroke="var(--brand-border, #dfe2ea)" stroke-width="1.5"/>
+
+  <!-- Primary connections from center node -->
+  <g stroke="var(--brand-foreground, #1c2029)" stroke-width="2.5" stroke-linecap="round">
+    <line x1="55" y1="55" x2="55" y2="20"/>
+    <line x1="55" y1="55" x2="84" y2="33"/>
+    <line x1="55" y1="55" x2="90" y2="63"/>
+    <line x1="55" y1="55" x2="79" y2="85"/>
+    <line x1="55" y1="55" x2="27" y2="83"/>
+    <line x1="55" y1="55" x2="19" y2="54"/>
+  </g>
+
+  <!-- Nodes — center large, outer varied -->
+  <g fill="var(--brand-foreground, #1c2029)">
+    <circle cx="55"  cy="55"  r="13"/>   <!-- center -->
+    <circle cx="55"  cy="20"  r="7"/>    <!-- top -->
+    <circle cx="84"  cy="33"  r="5.5"/>  <!-- top-right -->
+    <circle cx="90"  cy="63"  r="5"/>    <!-- right -->
+    <circle cx="79"  cy="85"  r="7"/>    <!-- bottom-right -->
+    <circle cx="27"  cy="83"  r="10"/>   <!-- bottom-left, second largest -->
+    <circle cx="19"  cy="54"  r="5"/>    <!-- left -->
+  </g>
+
+  <!-- Wordmark: codegraph (medium) + labs (regular, accent) -->
+  <text x="120" y="68" font-family="'Source Code Pro', monospace, sans-serif" font-size="42" letter-spacing="-0.5">
+    <tspan fill="var(--brand-foreground, #1c2029)" font-weight="600">codegraph</tspan><tspan fill="var(--brand-accent, #c81d25)" font-weight="400">labs</tspan>
+  </text>
+</svg>
