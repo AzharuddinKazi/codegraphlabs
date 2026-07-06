@@ -283,6 +283,95 @@
       margin: var(--brand-size-lg) 0;
     }
 
+    /* Real screenshot figure — distinct treatment from the bordered stat/side cards */
+    .cs-figure {
+      margin: var(--brand-size-lg) 0;
+    }
+
+    .cs-figure img {
+      width: 100%;
+      display: block;
+      border: var(--brand-line-width) solid var(--brand-color-border);
+    }
+
+    .cs-figure figcaption {
+      font-size: var(--brand-font-size-sm);
+      color: var(--brand-color-text-tertiary);
+      margin-top: var(--brand-size-xs);
+    }
+
+    /* Inline stat highlight — no border, breaks the card-everywhere pattern */
+    .stat-highlight {
+      display: flex;
+      align-items: baseline;
+      gap: var(--brand-size-md);
+      padding: var(--brand-size-sm) 0;
+    }
+
+    .stat-highlight .stat-num-lg {
+      font-family: var(--display-family);
+      font-size: 44px;
+      font-weight: 700;
+      color: var(--brand-color-primary);
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .stat-highlight .stat-cap {
+      color: var(--brand-color-text-secondary);
+      font-size: var(--brand-font-size);
+      line-height: 1.5;
+    }
+
+    /* Architecture Decision Record entries */
+    .adr-item {
+      border-left: 2px solid var(--brand-color-border);
+      padding-left: var(--brand-size);
+    }
+
+    .adr-q {
+      font-weight: 700;
+      font-size: var(--brand-font-size);
+      color: var(--brand-color-text);
+    }
+
+    .adr-a {
+      color: var(--brand-color-text-secondary);
+      font-size: var(--brand-font-size);
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+
+    /* Real vs. designed maturity table */
+    .maturity-table {
+      display: flex;
+      flex-direction: column;
+      border: var(--brand-line-width) solid var(--brand-color-border);
+    }
+
+    .maturity-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--brand-size);
+      padding: var(--brand-size-sm) var(--brand-size);
+      border-bottom: var(--brand-line-width) solid var(--brand-color-border-secondary);
+      align-items: center;
+    }
+
+    .maturity-row:last-child { border-bottom: none; }
+
+    .maturity-label { font-size: var(--brand-font-size); color: var(--brand-color-text); }
+
+    .maturity-status {
+      font-family: var(--code-family);
+      font-size: var(--brand-font-size-sm);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .maturity-status.is-built { color: var(--brand-color-text); }
+    .maturity-status.is-designed { color: var(--brand-color-text-tertiary); }
+
     @media (max-width: 860px) {
       .cs-meta-grid {
         grid-template-columns: 1fr 1fr;
@@ -332,12 +421,12 @@
         </div>
         <div class="cs-meta-item">
           <div class="cs-meta-label">STATUS</div>
-          <div class="cs-meta-val">Docs / Development</div>
+          <div class="cs-meta-val">Core Pipeline: Built &amp; Tested</div>
         </div>
         <div class="cs-meta-item">
           <div class="cs-meta-label">OUTCOME</div>
           <!-- Exactly one primary color text inside metadata highlight -->
-          <div class="cs-meta-val" style="color: var(--brand-color-primary);">Autonomous Consulting</div>
+          <div class="cs-meta-val" style="color: var(--brand-color-primary);">Autonomous Analysis</div>
         </div>
       </div>
     </div>
@@ -345,13 +434,22 @@
     <!-- Case Study Body -->
     <div class="section cs-grid">
       <article class="cs-content">
-        <h3>1. Concept & Google DS-STAR Foundations</h3>
+        <p style="font-size: var(--brand-font-size-sm); color: var(--brand-color-text-tertiary); font-style: italic;">
+          A self-directed architecture &amp; product-design exercise — designed against a realistic, hypothetical financial-crime supervision scenario, not an actual client engagement.
+        </p>
+
+        <h3>1. Concept &amp; DS-STAR Foundations</h3>
         <p>
-          <strong>Agent-DASC</strong> (Data Analytics Software Consultant) is an autonomous data science agent modeled on the core architecture of the **Google DS-STAR** research paper (*"DS-STAR: Data Science Agent via Iterative Planning and Verification"*). 
+          <strong>Agent-DASC</strong> is an agentic data science system built on the architecture from Google's <strong>DS-STAR</strong> paper (<em>"DS-STAR: Data Science Agent via Iterative Planning and Verification,"</em> arXiv:2509.21825). The goal: let a non-technical analyst type a question in plain English — e.g. <em>"Which institutions have the highest fraud loss rate relative to transaction volume this quarter?"</em> — and get back a cited, data-backed answer, without writing Python or SQL.
         </p>
         <p>
-          Rather than relying on single-shot LLM queries to build scripts, DS-STAR establishes a structured multi-agent loop that mimics human data scientists. It automates analysis over heterogeneous data formats, designs step-by-step query programs, executes them in sandboxes, and validates outputs using rigorous verification checks.
+          Rather than a single-shot LLM query, DS-STAR runs a structured multi-agent loop that plans, codes, executes in a sandbox, verifies, and iterates — closer to how a human data scientist actually works through an ambiguous analytical question.
         </p>
+
+        <div class="stat-highlight">
+          <div class="stat-num-lg">+32pp</div>
+          <div class="stat-cap">DS-STAR's own published benchmark: on hard multi-file analytical tasks (DABStep), the structured pipeline scores 45.24% vs. 12.70% for the same frontier LLM used alone — evidence that orchestration, not raw model size, is what solves this class of problem.</div>
+        </div>
 
         <div class="g-visual radius-lg">
           <!-- Flow diagram inside project subpage -->
@@ -377,21 +475,86 @@
           </svg>
         </div>
 
-        <h3>2. Multi-Agent Pipeline Mechanics</h3>
+        <h3>2. What's Actually Built vs. Designed</h3>
         <p>
-          Following Google's DS-STAR framework, Agent-DASC divides processing duties across five specialized agent components:
+          It's easy to make an agent framework look further along than it is. Here's the honest breakdown:
+        </p>
+        <div class="maturity-table radius-lg">
+          <div class="maturity-row">
+            <div class="maturity-label">8-agent LangGraph state machine (Analyzer → Planner → Coder → Executor → Debugger → Router → Verifier → Finalizer), with real conditional routing and a debug-retry loop</div>
+            <div class="maturity-status is-built">BUILT + TESTED</div>
+          </div>
+          <div class="maturity-row">
+            <div class="maturity-label">Docker sandbox execution — isolated container, no network, memory-capped, non-root</div>
+            <div class="maturity-status is-built">BUILT + TESTED</div>
+          </div>
+          <div class="maturity-row">
+            <div class="maturity-label">Test suite covering graph construction, planner logic, and end-to-end runs</div>
+            <div class="maturity-status is-built">BUILT + TESTED</div>
+          </div>
+          <div class="maturity-row">
+            <div class="maturity-label">Report-generation mode (sub-question decomposition + synthesis for open-ended research questions)</div>
+            <div class="maturity-status is-designed">DESIGNED, NOT BUILT</div>
+          </div>
+          <div class="maturity-row">
+            <div class="maturity-label">Auth, RBAC, PII masking, tamper-evident audit log</div>
+            <div class="maturity-status is-designed">DESIGNED, NOT BUILT</div>
+          </div>
+          <div class="maturity-row">
+            <div class="maturity-label">Frontend application</div>
+            <div class="maturity-status is-designed">DESIGNED, NOT BUILT</div>
+          </div>
+        </div>
+        <p>
+          In plain terms: the core reasoning loop is real, running code with a passing test suite — not a mock. The production shell around it (security, reporting mode, UI) exists as a fully-specified design, not yet implemented.
+        </p>
+
+        <h3>3. Multi-Agent Pipeline Mechanics</h3>
+        <p>
+          The real implementation runs eight specialized nodes through a LangGraph state machine, each with its own prompt contract:
         </p>
         <ol style="padding-left: 20px; display: flex; flex-direction: column; gap: 8px;">
-          <li><strong>Analyzer:</strong> Inspects heterogeneous datasets (CSV, JSON, Excel, markdown) to extract structure and statistics.</li>
-          <li><strong>Planner:</strong> Formulates a structured, multi-step logical execution plan.</li>
-          <li><strong>Coder:</strong> Translates plan items into executable Python, generating SQL operations and analysis code.</li>
-          <li><strong>Debugger:</strong> Captures execution errors in sandbox loops and performs automatic refactoring.</li>
-          <li><strong>Verifier:</strong> Act as an LLM-based judge to evaluate output validity against the original requirements, refining the plan if the score falls below threshold parameters.</li>
+          <li><strong>Analyzer:</strong> Profiles heterogeneous input files (CSV, JSON, Excel) to extract schema, row counts, and summary statistics before any plan is written.</li>
+          <li><strong>Planner:</strong> Formulates a structured, multi-step execution plan from the query and the Analyzer's output.</li>
+          <li><strong>Coder:</strong> Translates each plan step into a complete, self-contained Python script.</li>
+          <li><strong>Executor:</strong> Runs the script inside the sandboxed container and captures stdout/exit code.</li>
+          <li><strong>Debugger:</strong> On a non-zero exit code, receives both the traceback <em>and</em> dataset metadata (column headers, schema) — tracebacks alone are usually insufficient for data-centric bugs — and rewrites the script.</li>
+          <li><strong>Router:</strong> Decides whether to retry, proceed to verification, or escalate based on round state.</li>
+          <li><strong>Verifier:</strong> Acts as an LLM-based judge, issuing a pass/fail verdict against the original question.</li>
+          <li><strong>Finalizer:</strong> Assembles the verified result and explanation returned to the analyst.</li>
         </ol>
 
-        <h3>3. Implementation Details</h3>
+        <figure class="cs-figure">
+          <img src="../assets/agent-dasc-pipeline.png" alt="UX design mockup showing the Agent-DASC pipeline mid-run: query, round budget, and live agent-by-agent trace (Analyzer, Planner, Executor, Verifier)" loading="lazy" class="radius-lg" />
+          <figcaption>UX design mockup — an analysis in progress, showing the round budget and live per-agent trace. (Design artifact from the UX phase, not a live production screenshot — the frontend itself is not yet built.)</figcaption>
+        </figure>
+
+        <h3>4. Architecture Decisions</h3>
         <p>
-          The implementation of the DS-STAR-based planning and verification agent uses structured schemas to validate code executions. Below is a code block showing the execution wrapper:
+          A few of the tradeoffs that came up translating the paper into something deployable in a constrained, air-gapped enterprise environment:
+        </p>
+        <div class="cs-content" style="gap: var(--brand-size-lg);">
+          <div class="adr-item">
+            <div class="adr-q">Q: One Docker container per task, or a fresh one per round?</div>
+            <div class="adr-a">One persistent container per task, reused across rounds via <code>docker exec</code>. A fresh container per round means paying a multi-second cold start up to 20+ times per query. This is only safe because the Coder is required to emit a complete, self-contained script every round — so there's no cross-round state to leak.</div>
+          </div>
+          <div class="adr-item">
+            <div class="adr-q">Q: Sequential or parallel sub-questions?</div>
+            <div class="adr-a">Sequential by default, parallel behind a config flag — a deliberate departure from what the paper assumes, driven by shared, constrained GPU capacity in an on-premise/air-gapped deployment with multiple concurrent analysts. The paper doesn't have to think about this; a real enterprise deployment does.</div>
+          </div>
+          <div class="adr-item">
+            <div class="adr-q">Q: How to handle a script that prints 50,000 rows to stdout?</div>
+            <div class="adr-a">A hard 10KB stdout cap, with larger outputs redirected to file storage instead. This is framed as <em>both</em> a context-window control <em>and</em> a data-loss-prevention control — it also prevents a script from exfiltrating bulk data via print flooding, which matters in a regulated, air-gapped setting.</div>
+          </div>
+          <div class="adr-item">
+            <div class="adr-q">Q: Round budget — the paper defaults to 20. Why does this default to 5–6?</div>
+            <div class="adr-a">Faster analyst feedback. The paper's own data shows hard tasks average 5.6 rounds — so roughly half of hard queries would need an extension under a low default. The tradeoff is handled explicitly: a 40-round hard cap plus an "Extend and continue" affordance in the UI, rather than silently forcing every query through 20 rounds regardless of difficulty.</div>
+          </div>
+        </div>
+
+        <h3>5. Implementation Details</h3>
+        <p>
+          Simplified for illustration — the real implementation is a LangGraph state machine (see <code>backend/agents/graph.py</code> in the repository), but this captures the core plan → execute → verify loop:
         </p>
 
         <pre class="radius-lg"><code><span class="token-keyword">class</span> <span class="token-keyword">DSStarAgent</span>:
@@ -411,15 +574,32 @@
             result = self.coder.execute_steps(plan)
         <span class="token-keyword">return</span> result</code></pre>
 
-        <h3>4. Documenting Product Lifecycle (SOPs)</h3>
+        <h3>6. Running It as a Real Product Lifecycle</h3>
         <p>
-          The repository's <code>docs/product-lifecycle</code> branch maps the Standard Operating Procedures (SOPs) required to maintain and evaluate agent workflows in production:
+          The repository's <code>docs/product-lifecycle</code> branch treats this like a real pre-code process — discovery and PRD before a UX spec, a UX spec before a tech design doc — rather than jumping straight to code:
         </p>
-        <ul>
-          <li><strong>Prompt Governance:</strong> Tracking system prompts and few-shot stores through pipeline versioning.</li>
-          <li><strong>Relational DB Mapping:</strong> Schema embedding generation to locate correct columns across databases containing hundreds of tables.</li>
-          <li><strong>Drift Monitoring:</strong> Auto-evaluation of verifier accuracy against expert-approved baseline datasets.</li>
-        </ul>
+        <div class="maturity-table radius-lg">
+          <div class="maturity-row">
+            <div class="maturity-label">Discovery — 1-pager, DS-STAR paper analysis, requirements</div>
+            <div class="maturity-status is-built">COMPLETE</div>
+          </div>
+          <div class="maturity-row">
+            <div class="maturity-label">PRD / functional spec</div>
+            <div class="maturity-status is-designed">DRAFT — 2 open questions</div>
+          </div>
+          <div class="maturity-row">
+            <div class="maturity-label">UX design spec — full mockup set</div>
+            <div class="maturity-status is-built">COMPLETE</div>
+          </div>
+          <div class="maturity-row">
+            <div class="maturity-label">Technical design doc</div>
+            <div class="maturity-status is-designed">DRAFT — 2 sections in review</div>
+          </div>
+          <div class="maturity-row">
+            <div class="maturity-label">Security &amp; privacy review, test strategy, work breakdown, launch plan</div>
+            <div class="maturity-status is-designed">NOT STARTED</div>
+          </div>
+        </div>
       </article>
 
       <aside class="cs-sidebar">
