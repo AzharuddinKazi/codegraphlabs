@@ -313,6 +313,12 @@
       align-items: stretch;
     }
 
+    .hero-graph {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
     /* Key Stats Grid */
     .stats-grid {
       display: grid;
@@ -702,8 +708,13 @@
       }
 
       .nav-links a {
+        display: block;
         padding: var(--brand-size) clamp(20px, 5vw, 40px);
         border-bottom: var(--brand-line-width) solid var(--brand-color-border-secondary);
+      }
+
+      .nav-links li:last-child a {
+        border-bottom: none;
       }
 
       .nav-actions .btn-secondary {
@@ -790,15 +801,78 @@
           <p class="hero-description">
             Seasoned Data Science Professional with 7 years of experience in delivering analytical solutions and decision support across diverse business sectors. Currently working as a Specialist Data Scientist within a federal regulatory body in the UAE.
           </p>
-          <div style="display: flex; gap: var(--brand-size-sm);">
+          <div style="display: flex; gap: var(--brand-size-sm); flex-wrap: wrap;">
             <!-- The Singular Crimson Accent Element on this initial view is the primary CTA button -->
             <a href="#portfolio" class="btn btn-primary radius-lg">Explore Featured Project</a>
             <a href="#timeline" class="btn btn-secondary radius-lg">View Professional Career</a>
           </div>
         </div>
         <div class="hero-visual radius-lg">
-          <!-- Render generated high-quality abstract tech illustration instead of graph SVGs -->
-          <img src="assets/hero-visual.png" alt="Abstract data science and machine learning visualization grid" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          <!-- Geometric node-graph, extending the logo mark's visual language (no crimson: the CTA button is this view's one accent) -->
+          <svg class="hero-graph" viewBox="0 0 640 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Abstract node-graph illustration">
+            <defs>
+              <pattern id="hero-dot-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r="1" fill="var(--brand-color-border)" opacity="0.6" />
+              </pattern>
+            </defs>
+            <rect width="640" height="400" fill="url(#hero-dot-grid)" />
+
+            <!-- Faint secondary cross-links -->
+            <g stroke="var(--brand-color-border)" stroke-width="1.5" stroke-linecap="round" opacity="0.8">
+              <line x1="140" y1="210" x2="500" y2="260" />
+              <line x1="330" y1="120" x2="420" y2="340" />
+              <line x1="70" y1="270" x2="210" y2="300" />
+              <line x1="400" y1="70" x2="380" y2="170" />
+            </g>
+
+            <!-- Primary backbone + hub-to-satellite connections -->
+            <g stroke="var(--brand-color-text)" stroke-width="2.5" stroke-linecap="round">
+              <line x1="140" y1="210" x2="330" y2="120" />
+              <line x1="330" y1="120" x2="500" y2="260" />
+              <line x1="500" y1="260" x2="420" y2="340" />
+              <line x1="420" y1="340" x2="140" y2="210" />
+
+              <line x1="140" y1="210" x2="60" y2="140" />
+              <line x1="140" y1="210" x2="70" y2="270" />
+              <line x1="140" y1="210" x2="170" y2="90" />
+              <line x1="140" y1="210" x2="210" y2="300" />
+
+              <line x1="330" y1="120" x2="260" y2="60" />
+              <line x1="330" y1="120" x2="400" y2="70" />
+              <line x1="330" y1="120" x2="380" y2="170" />
+
+              <line x1="500" y1="260" x2="560" y2="180" />
+              <line x1="500" y1="260" x2="590" y2="320" />
+              <line x1="500" y1="260" x2="450" y2="220" />
+
+              <line x1="420" y1="340" x2="350" y2="380" />
+              <line x1="420" y1="340" x2="480" y2="390" />
+            </g>
+
+            <!-- Nodes -->
+            <g fill="var(--brand-color-text)">
+              <circle cx="140" cy="210" r="16" />
+              <circle cx="330" cy="120" r="14" />
+              <circle cx="500" cy="260" r="18" />
+              <circle cx="420" cy="340" r="10" />
+
+              <circle cx="60" cy="140" r="6" />
+              <circle cx="70" cy="270" r="5" />
+              <circle cx="170" cy="90" r="7" />
+              <circle cx="210" cy="300" r="6" />
+
+              <circle cx="260" cy="60" r="5" />
+              <circle cx="400" cy="70" r="6" />
+              <circle cx="380" cy="170" r="5" />
+
+              <circle cx="560" cy="180" r="6" />
+              <circle cx="590" cy="320" r="7" />
+              <circle cx="450" cy="220" r="5" />
+
+              <circle cx="350" cy="380" r="5" />
+              <circle cx="480" cy="390" r="6" />
+            </g>
+          </svg>
         </div>
       </div>
     </section>
@@ -945,7 +1019,7 @@
           <span class="tag" style="align-self: flex-start; border-color: var(--brand-color-primary); color: var(--brand-color-primary); font-weight: 700;">ACTIVE DEVELOPMENT</span>
           <h3 style="font-size: var(--brand-font-size-heading-4); margin: var(--brand-size-xs) 0 var(--brand-size-sm)">Agent-DASC Architecture</h3>
           <p style="color: var(--brand-color-text-secondary); margin-bottom: var(--brand-size-md); line-height: 1.5">
-            Agent-DASC is modeled directly on the <strong>Google DS-STAR agentic framework</strong>. It automates multi-step, heterogeneous data science tasks by coordinating specialized agents (Planner, Coder, Debugger, and Verifier) in iterative loops. The system plans actions, compiles executables, debugging runtime issues autonomously, and validates outputs using custom judgment verification layers to handle unstructured queries.
+            Agent-DASC is modeled directly on <strong>Google's DS-STAR agentic framework</strong>. It automates multi-step, heterogeneous data science tasks by coordinating eight specialized agents (Analyzer, Planner, Coder, Executor, Debugger, Router, Verifier, and Finalizer) through a LangGraph state machine — planning, executing in a sandboxed container, and iterating until a verifier judges the result sound.
           </p>
           <div style="display: flex; gap: var(--brand-size-sm); flex-wrap: wrap;">
             <!-- Singular Crimson Accent Element on this view is the link button -->
@@ -959,17 +1033,14 @@
 
         <div class="project-visual-preview radius-lg">
           <div>
-            <div style="font-family: var(--code-family); color: var(--brand-color-primary); font-weight: 700; margin-bottom: var(--brand-size-xs)">[DS-STAR PIPELINE]</div>
-            <div style="font-family: var(--code-family); line-height: 1.4; color: var(--brand-color-text-secondary)">
-              &gt; Loading Google DS-STAR agent pipeline...<br />
-              &gt; Action: Planner initiated &rarr; step execution<br />
-              &gt; Executing Code: py_run_task()...<br />
-              &gt; Status: Verifier evaluating outputs... OK.
+            <div style="font-family: var(--display-family); font-size: 40px; font-weight: 700; color: var(--brand-color-primary); line-height: 1;">+32pp</div>
+            <div style="font-family: var(--code-family); font-size: var(--brand-font-size-sm); line-height: 1.5; color: var(--brand-color-text-secondary); margin-top: var(--brand-size-sm);">
+              DS-STAR's published benchmark improvement over the same frontier LLM used alone, on hard multi-file analytical tasks (DABStep).
             </div>
           </div>
           <div style="border-top: var(--brand-line-width) dashed var(--brand-color-border); padding-top: var(--brand-size-sm); font-size: 11px; display: flex; justify-content: space-between; align-items: center">
             <span>Branch: docs/product-lifecycle</span>
-            <span style="color: var(--brand-color-text);">Status: 200 OK</span>
+            <span style="color: var(--brand-color-text);">8-agent pipeline: built &amp; tested</span>
           </div>
         </div>
       </div>
