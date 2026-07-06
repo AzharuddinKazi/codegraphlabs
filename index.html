@@ -702,8 +702,13 @@
       }
 
       .nav-links a {
+        display: block;
         padding: var(--brand-size) clamp(20px, 5vw, 40px);
         border-bottom: var(--brand-line-width) solid var(--brand-color-border-secondary);
+      }
+
+      .nav-links li:last-child a {
+        border-bottom: none;
       }
 
       .nav-actions .btn-secondary {
@@ -790,7 +795,7 @@
           <p class="hero-description">
             Seasoned Data Science Professional with 7 years of experience in delivering analytical solutions and decision support across diverse business sectors. Currently working as a Specialist Data Scientist within a federal regulatory body in the UAE.
           </p>
-          <div style="display: flex; gap: var(--brand-size-sm);">
+          <div style="display: flex; gap: var(--brand-size-sm); flex-wrap: wrap;">
             <!-- The Singular Crimson Accent Element on this initial view is the primary CTA button -->
             <a href="#portfolio" class="btn btn-primary radius-lg">Explore Featured Project</a>
             <a href="#timeline" class="btn btn-secondary radius-lg">View Professional Career</a>
