@@ -76,6 +76,7 @@
     .section {
       padding: clamp(64px, 8vh, 112px) 0;
       border-bottom: var(--brand-line-width) solid var(--brand-color-border-secondary);
+      scroll-margin-top: 80px;
     }
 
     .section-head {
@@ -148,6 +149,23 @@
       gap: var(--brand-size-sm);
     }
 
+    /* Mobile nav toggle (hidden on desktop) */
+    .nav-toggle-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--brand-color-text);
+      cursor: pointer;
+      padding: var(--brand-size-xxs);
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--brand-border-radius-xs);
+    }
+
+    .nav-toggle-btn .icon-close { display: none; }
+    .nav-toggle-btn.open .icon-menu { display: none; }
+    .nav-toggle-btn.open .icon-close { display: block; }
+
     /* Buttons */
     .btn {
       display: inline-flex;
@@ -191,6 +209,17 @@
     .btn-primary:active {
       background-color: var(--brand-color-primary-active);
       border-color: var(--brand-color-primary-active);
+    }
+
+    /* Consistent keyboard focus treatment across interactive elements */
+    .btn:focus-visible,
+    .nav-links a:focus-visible,
+    .theme-toggle-btn:focus-visible,
+    .nav-toggle-btn:focus-visible,
+    .brand-logo-link:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--brand-color-primary-bg);
+      border-radius: var(--brand-border-radius-xs);
     }
 
     /* Theme Switcher Toggle styling */
@@ -599,6 +628,49 @@
       .form-row {
         grid-template-columns: 1fr;
       }
+      .footer-container {
+        flex-direction: column;
+        gap: var(--brand-size-sm);
+        text-align: center;
+      }
+    }
+
+    /* Mobile navigation drawer */
+    @media (max-width: 760px) {
+      .nav-toggle-btn {
+        display: flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background-color: var(--brand-color-bg-container);
+        border-bottom: var(--brand-line-width) solid var(--brand-color-border-secondary);
+        box-shadow: 0 8px 24px rgba(28, 32, 41, 0.08);
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height var(--brand-motion-duration-slow) var(--brand-motion-ease-in-out),
+                    opacity var(--brand-motion-duration-mid) var(--brand-motion-ease-in-out);
+      }
+
+      .nav-links.open {
+        max-height: 320px;
+        opacity: 1;
+      }
+
+      .nav-links a {
+        padding: var(--brand-size) clamp(20px, 5vw, 40px);
+        border-bottom: var(--brand-line-width) solid var(--brand-color-border-secondary);
+      }
+
+      .nav-actions .btn-secondary {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -638,7 +710,7 @@
         </svg>
       </a>
       <nav>
-        <ul class="nav-links">
+        <ul class="nav-links" id="nav-links">
           <li><a href="#about" class="active">Overview</a></li>
           <li><a href="#timeline">Career</a></li>
           <li><a href="#portfolio">Project</a></li>
@@ -656,6 +728,15 @@
           </svg>
         </button>
         <a href="#contact" class="btn btn-secondary radius-lg">Consultation</a>
+        <!-- Mobile nav toggle -->
+        <button id="nav-toggle" class="nav-toggle-btn radius-sm" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+          <svg class="icon-menu" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M3 6h18M3 12h18M3 18h18"></path>
+          </svg>
+          <svg class="icon-close" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="display:none;">
+            <path d="M18 6 6 18M6 6l12 12"></path>
+          </svg>
+        </button>
       </div>
     </div>
   </header>
@@ -684,7 +765,12 @@
     </section>
 
     <!-- 3 · METRICS & STATS SECTION -->
-    <section class="section wrap">
+    <section id="track-record" class="section wrap">
+      <div class="section-head">
+        <span class="kicker">By the Numbers</span>
+        <h2 class="section-title">A track record grounded in production systems</h2>
+        <p class="section-desc">Seven years translating statistical rigor into deployed decision support, across regulatory, corporate, and digital domains.</p>
+      </div>
       <div class="stats-grid">
         <div class="stat-card radius-lg">
           <div class="stat-num">7 Years</div>
@@ -883,6 +969,18 @@
               <a href="https://github.com/AzharuddinKazi">github.com/AzharuddinKazi</a>
             </div>
           </div>
+          <div class="contact-method">
+            <div class="contact-method-title">CURRENT AVAILABILITY</div>
+            <div class="contact-method-value">
+              Based in Dubai/Abu Dhabi, UAE (GST). Open to advisory panels and roundtables alongside my current regulatory role.
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="contact-method-title">RESPONSE TIME</div>
+            <div class="contact-method-value">
+              Inquiries are typically answered within 2 business days.
+            </div>
+          </div>
         </div>
 
         <form class="contact-form" onsubmit="event.preventDefault(); alert('Inquiry successfully simulated! In production, this form routes details to Azharuddin.');">
@@ -966,6 +1064,25 @@
         moonIcon.style.display = 'block';
         sunIcons.forEach(i => i.style.display = 'none');
       }
+    });
+
+    // Mobile nav drawer toggle
+    const navToggleBtn = document.getElementById('nav-toggle');
+    const navLinksEl = document.getElementById('nav-links');
+
+    navToggleBtn.addEventListener('click', () => {
+      const isOpen = navLinksEl.classList.toggle('open');
+      navToggleBtn.classList.toggle('open', isOpen);
+      navToggleBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Close the drawer once a destination is chosen
+    navLinksEl.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinksEl.classList.remove('open');
+        navToggleBtn.classList.remove('open');
+        navToggleBtn.setAttribute('aria-expanded', 'false');
+      });
     });
 
     // Navigation Active class linking logic
