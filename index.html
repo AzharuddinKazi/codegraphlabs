@@ -278,45 +278,176 @@
       color: var(--brand-color-text);
     }
 
-    /* Hero Section Visuals */
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: var(--brand-size-xxl);
-      align-items: center;
-      padding-top: clamp(48px, 6vh, 96px);
-      padding-bottom: clamp(48px, 6vh, 96px);
-    }
+    /* Signature Hero Band — deliberately fixed-dark regardless of theme toggle,
+       the same way a photograph wouldn't invert for dark mode. */
+    .signature-band {
+      --band-bg: #14161c;
+      --band-bg-2: #1c2029;
+      --band-line: #454b5c;
+      --band-node: #c3c8d4;
+      --band-text: #f4f5f7;
+      --band-text-muted: #9aa0b0;
+      --band-border: #33384a;
 
-    .hero-content h1 {
-      font-size: clamp(32px, 4.5vw, 48px);
-      letter-spacing: -0.025em;
-      line-height: 1.15;
-    }
-
-    .hero-description {
-      font-size: var(--brand-font-size-lg);
-      color: var(--brand-color-text-secondary);
-      margin-top: var(--brand-size-md);
-      margin-bottom: var(--brand-size-xl);
-      max-width: 580px;
-    }
-
-    /* Visual Image in Hero (Generated Brand visual, radius max 8px) */
-    .hero-visual {
-      border: var(--brand-line-width) solid var(--brand-color-border);
-      background-color: var(--brand-color-bg-container);
-      height: 320px;
       position: relative;
+      margin-top: clamp(24px, 4vh, 40px);
+      border-radius: var(--brand-border-radius);
+      border: var(--brand-line-width) solid var(--band-border);
+      background: linear-gradient(155deg, var(--band-bg) 0%, var(--band-bg-2) 100%);
       overflow: hidden;
+      min-height: 600px;
       display: flex;
-      align-items: stretch;
+      align-items: flex-end;
     }
 
-    .hero-graph {
+    .band-graph {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
+      opacity: 0.9;
+    }
+
+    .band-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(10,11,15,0.92) 0%, rgba(10,11,15,0.74) 30%, rgba(10,11,15,0.32) 58%, rgba(10,11,15,0.08) 82%);
+    }
+
+    .band-content {
+      position: relative;
+      z-index: 2;
+      padding: 56px clamp(28px, 5vw, 56px) 48px;
+      max-width: 720px;
+    }
+
+    .band-kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: var(--brand-size-sm);
+    }
+
+    .band-kicker .rule {
+      width: 28px;
+      height: 2px;
+      background: var(--brand-color-primary);
       display: block;
+    }
+
+    .band-kicker span {
+      font-family: var(--brand-font-family);
+      font-size: var(--brand-font-size-sm);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--brand-color-primary);
+    }
+
+    .band-content h1 {
+      font-size: clamp(32px, 4.6vw, 52px);
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: var(--band-text);
+    }
+
+    .band-content .hero-description {
+      margin-top: var(--brand-size-md);
+      margin-bottom: 0;
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--band-text-muted);
+      max-width: 540px;
+    }
+
+    .band-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--brand-size-sm);
+      margin-top: var(--brand-size-xl);
+      flex-wrap: wrap;
+    }
+
+    .btn-primary-badge {
+      display: inline-flex;
+      align-items: stretch;
+      height: 48px;
+      border-radius: var(--brand-border-radius);
+      overflow: hidden;
+      text-decoration: none;
+      font-family: var(--brand-font-family);
+      font-weight: 600;
+      font-size: var(--brand-font-size-sm);
+      transition: all var(--brand-motion-duration-mid) var(--brand-motion-ease-in-out);
+    }
+
+    .btn-primary-badge .label {
+      display: flex;
+      align-items: center;
+      background: var(--brand-color-primary);
+      color: #fff;
+      padding: 0 var(--brand-size);
+      transition: background-color var(--brand-motion-duration-mid) var(--brand-motion-ease-in-out);
+    }
+
+    .btn-primary-badge .badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      background: #fff;
+      color: var(--brand-color-primary);
+      border-radius: 50%;
+      margin: 4px;
+    }
+
+    .btn-primary-badge .badge svg { width: 16px; height: 16px; }
+
+    .btn-primary-badge:hover .label { background: var(--brand-color-primary-hover); }
+
+    .btn-secondary-outline {
+      display: inline-flex;
+      align-items: center;
+      height: 48px;
+      padding: 0 var(--brand-size-md);
+      border-radius: var(--brand-border-radius);
+      border: var(--brand-line-width) solid rgba(244,245,247,0.35);
+      color: var(--band-text);
+      text-decoration: none;
+      font-family: var(--brand-font-family);
+      font-weight: 600;
+      font-size: var(--brand-font-size-sm);
+      transition: border-color var(--brand-motion-duration-mid), background-color var(--brand-motion-duration-mid);
+    }
+
+    .btn-secondary-outline:hover {
+      border-color: rgba(244,245,247,0.6);
+      background: rgba(244,245,247,0.06);
+    }
+
+    .band-proof {
+      display: flex;
+      align-items: center;
+      gap: var(--brand-size);
+      margin-top: var(--brand-size-xl);
+      padding-left: var(--brand-size-sm);
+      border-left: 2px solid var(--brand-color-primary);
+    }
+
+    .band-proof .num {
+      font-family: var(--display-family);
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--band-text);
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .band-proof .cap {
+      font-size: var(--brand-font-size-sm);
+      color: var(--band-text-muted);
+      line-height: 1.4;
+      max-width: 360px;
     }
 
     /* Key Stats Grid */
@@ -653,12 +784,12 @@
 
     /* Responsive adjustments */
     @media (max-width: 860px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
+      .signature-band {
+        min-height: 520px;
+        margin-top: var(--brand-size-md);
       }
-      .hero-visual {
-        order: -1;
-        height: 240px;
+      .band-content {
+        padding: 40px 20px 36px;
       }
       .stats-grid {
         grid-template-columns: 1fr;
@@ -792,87 +923,88 @@
   </header>
 
   <main>
-    <!-- 2 · HERO SECTION -->
-    <section id="about" class="section wrap" style="border-bottom: none;">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <span class="kicker">Specialist Data Scientist</span>
+    <!-- 2 · HERO SECTION — full-bleed signature band, deliberately fixed-dark like a photograph -->
+    <section id="about" class="section wrap" style="border-bottom: none; padding-bottom: 0;">
+      <div class="signature-band radius-lg">
+        <svg class="band-graph" viewBox="0 0 1120 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Node-graph signature visual">
+          <defs>
+            <pattern id="band-dot-grid" width="44" height="44" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r="1" fill="var(--band-line)" opacity="0.5" />
+            </pattern>
+          </defs>
+          <rect width="1120" height="600" fill="url(#band-dot-grid)" />
+
+          <!-- Faint secondary cross-links -->
+          <g stroke="var(--band-line)" stroke-width="1.5" stroke-linecap="round" opacity="0.7">
+            <line x1="680" y1="200" x2="900" y2="270" />
+            <line x1="470" y1="120" x2="760" y2="430" />
+            <line x1="820" y1="140" x2="1030" y2="380" />
+          </g>
+
+          <!-- Primary backbone + hub-to-satellite connections, biased toward the right/top so the
+               text zone (bottom-left, under the scrim) stays visually quiet -->
+          <g stroke="var(--band-node)" stroke-width="2.2" stroke-linecap="round" opacity="0.85">
+            <line x1="680" y1="200" x2="470" y2="120" />
+            <line x1="470" y1="120" x2="900" y2="270" />
+            <line x1="900" y1="270" x2="760" y2="430" />
+            <line x1="760" y1="430" x2="680" y2="200" />
+
+            <line x1="470" y1="120" x2="370" y2="60" />
+            <line x1="470" y1="120" x2="620" y2="70" />
+            <line x1="470" y1="120" x2="580" y2="200" />
+
+            <line x1="900" y1="270" x2="1000" y2="180" />
+            <line x1="900" y1="270" x2="1030" y2="380" />
+            <line x1="900" y1="270" x2="820" y2="140" />
+
+            <line x1="760" y1="430" x2="860" y2="510" />
+            <line x1="680" y1="200" x2="770" y2="130" />
+          </g>
+
+          <!-- Nodes -->
+          <g fill="var(--band-node)" opacity="0.95">
+            <circle cx="680" cy="200" r="15" />
+            <circle cx="470" cy="120" r="13" />
+            <circle cx="900" cy="270" r="18" />
+            <circle cx="760" cy="430" r="10" />
+
+            <circle cx="370" cy="60" r="5" />
+            <circle cx="620" cy="70" r="6" />
+            <circle cx="580" cy="200" r="5" />
+
+            <circle cx="1000" cy="180" r="6" />
+            <circle cx="1030" cy="380" r="7" />
+            <circle cx="820" cy="140" r="5" />
+
+            <circle cx="860" cy="510" r="6" />
+            <circle cx="770" cy="130" r="5" />
+          </g>
+        </svg>
+        <div class="band-scrim"></div>
+
+        <div class="band-content">
+          <div class="band-kicker">
+            <span class="rule"></span>
+            <span>Specialist Data Scientist</span>
+          </div>
           <h1>Engineering decision support frameworks for complex regulatory data.</h1>
           <p class="hero-description">
             Seasoned Data Science Professional with 7 years of experience in delivering analytical solutions and decision support across diverse business sectors. Currently working as a Specialist Data Scientist within a federal regulatory body in the UAE.
           </p>
-          <div style="display: flex; gap: var(--brand-size-sm); flex-wrap: wrap;">
+          <div class="band-actions">
             <!-- The Singular Crimson Accent Element on this initial view is the primary CTA button -->
-            <a href="#portfolio" class="btn btn-primary radius-lg">Explore Featured Project</a>
-            <a href="#timeline" class="btn btn-secondary radius-lg">View Professional Career</a>
+            <a href="#portfolio" class="btn-primary-badge">
+              <span class="label">Explore Featured Project</span>
+              <span class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+              </span>
+            </a>
+            <a href="#timeline" class="btn-secondary-outline">View Professional Career</a>
           </div>
-        </div>
-        <div class="hero-visual radius-lg">
-          <!-- Geometric node-graph, extending the logo mark's visual language (no crimson: the CTA button is this view's one accent) -->
-          <svg class="hero-graph" viewBox="0 0 640 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Abstract node-graph illustration">
-            <defs>
-              <pattern id="hero-dot-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <circle cx="1" cy="1" r="1" fill="var(--brand-color-border)" opacity="0.6" />
-              </pattern>
-            </defs>
-            <rect width="640" height="400" fill="url(#hero-dot-grid)" />
-
-            <!-- Faint secondary cross-links -->
-            <g stroke="var(--brand-color-border)" stroke-width="1.5" stroke-linecap="round" opacity="0.8">
-              <line x1="140" y1="210" x2="500" y2="260" />
-              <line x1="330" y1="120" x2="420" y2="340" />
-              <line x1="70" y1="270" x2="210" y2="300" />
-              <line x1="400" y1="70" x2="380" y2="170" />
-            </g>
-
-            <!-- Primary backbone + hub-to-satellite connections -->
-            <g stroke="var(--brand-color-text)" stroke-width="2.5" stroke-linecap="round">
-              <line x1="140" y1="210" x2="330" y2="120" />
-              <line x1="330" y1="120" x2="500" y2="260" />
-              <line x1="500" y1="260" x2="420" y2="340" />
-              <line x1="420" y1="340" x2="140" y2="210" />
-
-              <line x1="140" y1="210" x2="60" y2="140" />
-              <line x1="140" y1="210" x2="70" y2="270" />
-              <line x1="140" y1="210" x2="170" y2="90" />
-              <line x1="140" y1="210" x2="210" y2="300" />
-
-              <line x1="330" y1="120" x2="260" y2="60" />
-              <line x1="330" y1="120" x2="400" y2="70" />
-              <line x1="330" y1="120" x2="380" y2="170" />
-
-              <line x1="500" y1="260" x2="560" y2="180" />
-              <line x1="500" y1="260" x2="590" y2="320" />
-              <line x1="500" y1="260" x2="450" y2="220" />
-
-              <line x1="420" y1="340" x2="350" y2="380" />
-              <line x1="420" y1="340" x2="480" y2="390" />
-            </g>
-
-            <!-- Nodes -->
-            <g fill="var(--brand-color-text)">
-              <circle cx="140" cy="210" r="16" />
-              <circle cx="330" cy="120" r="14" />
-              <circle cx="500" cy="260" r="18" />
-              <circle cx="420" cy="340" r="10" />
-
-              <circle cx="60" cy="140" r="6" />
-              <circle cx="70" cy="270" r="5" />
-              <circle cx="170" cy="90" r="7" />
-              <circle cx="210" cy="300" r="6" />
-
-              <circle cx="260" cy="60" r="5" />
-              <circle cx="400" cy="70" r="6" />
-              <circle cx="380" cy="170" r="5" />
-
-              <circle cx="560" cy="180" r="6" />
-              <circle cx="590" cy="320" r="7" />
-              <circle cx="450" cy="220" r="5" />
-
-              <circle cx="350" cy="380" r="5" />
-              <circle cx="480" cy="390" r="6" />
-            </g>
-          </svg>
+          <div class="band-proof">
+            <div class="num">7 Years</div>
+            <div class="cap">Data science &amp; AI advisory across regulatory, corporate, and digital sectors</div>
+          </div>
         </div>
       </div>
     </section>
