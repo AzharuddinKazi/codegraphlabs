@@ -370,7 +370,7 @@
 
     .btn-primary-badge {
       display: inline-flex;
-      align-items: stretch;
+      align-items: center;
       height: 48px;
       border-radius: var(--brand-border-radius);
       overflow: hidden;
@@ -384,6 +384,7 @@
     .btn-primary-badge .label {
       display: flex;
       align-items: center;
+      align-self: stretch;
       background: var(--brand-color-primary);
       color: #fff;
       padding: 0 var(--brand-size);
@@ -394,7 +395,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 48px;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
       background: #fff;
       color: var(--brand-color-primary);
       border-radius: 50%;
@@ -461,7 +464,13 @@
       background-color: var(--brand-color-bg-container);
       border: var(--brand-line-width) solid var(--brand-color-border);
       padding: var(--brand-size-xl);
-      transition: transform var(--brand-motion-duration-mid);
+      transition: transform var(--brand-motion-duration-mid) var(--brand-motion-ease-out),
+                  border-color var(--brand-motion-duration-mid) var(--brand-motion-ease-out);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--brand-color-text-quaternary);
     }
 
     .stat-num {
@@ -782,6 +791,19 @@
       align-items: center;
     }
 
+    /* Scroll-reveal: fade + slide up, driven by IntersectionObserver */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity var(--brand-motion-duration-slow) var(--brand-motion-ease-out),
+                  transform var(--brand-motion-duration-slow) var(--brand-motion-ease-out);
+    }
+
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* Responsive adjustments */
     @media (max-width: 860px) {
       .signature-band {
@@ -893,7 +915,7 @@
         <ul class="nav-links" id="nav-links">
           <li><a href="#about" class="active">Overview</a></li>
           <li><a href="#timeline">Career</a></li>
-          <li><a href="#portfolio">Project</a></li>
+          <li><a href="#portfolio">Projects</a></li>
           <li><a href="#blog">Blog</a></li>
           <li><a href="#contact">Contact</a></li>
           <li><a href="assets/Azharuddin-Kazi-Resume.pdf" download>Résumé</a></li>
@@ -994,7 +1016,7 @@
           <div class="band-actions">
             <!-- The Singular Crimson Accent Element on this initial view is the primary CTA button -->
             <a href="#portfolio" class="btn-primary-badge">
-              <span class="label">Explore Featured Project</span>
+              <span class="label">Explore Projects</span>
               <span class="badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
               </span>
@@ -1138,12 +1160,12 @@
       </div>
     </section>
 
-    <!-- 5 · FEATURED PROJECT (Agent-DASC) -->
+    <!-- 5 · PROJECTS -->
     <section id="portfolio" class="section wrap">
       <div class="section-head">
-        <span class="kicker">Featured Project</span>
-        <h2 class="section-title">Agent-DASC: Agentic Data Analytics Software Consultant</h2>
-        <p class="section-desc">An agentic AI framework based on Google's DS-STAR architecture, automating complex data science workflows.</p>
+        <span class="kicker">Projects</span>
+        <h2 class="section-title">Independent builds and technical deep-dives</h2>
+        <p class="section-desc">Work outside the day job — agentic systems, architecture experiments, and the occasional deep-dive into a paper worth implementing.</p>
       </div>
 
       <div class="project-showcase radius-lg">
@@ -1225,26 +1247,27 @@
           </div>
         </div>
 
-        <form class="contact-form" onsubmit="event.preventDefault(); alert('Inquiry successfully simulated! In production, this form routes details to Azharuddin.');">
+        <!-- TODO: replace YOUR_FORM_ID with your real Formspree endpoint (formspree.io, free tier) -->
+        <form id="contact-form" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="contact-name">Full Name</label>
-              <input type="text" id="contact-name" class="form-input" placeholder="e.g. Dr. Emily Carter" required />
+              <input type="text" id="contact-name" name="name" class="form-input" placeholder="e.g. Dr. Emily Carter" required />
             </div>
             <div class="form-group">
               <label class="form-label" for="contact-email">Email Address</label>
-              <input type="email" id="contact-email" class="form-input" placeholder="e.g. emily@entity.gov" required />
+              <input type="email" id="contact-email" name="email" class="form-input" placeholder="e.g. emily@entity.gov" required />
             </div>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="contact-org">Organization / Institution</label>
-            <input type="text" id="contact-org" class="form-input" placeholder="e.g. Commercial Bank or Regulatory Authority" />
+            <input type="text" id="contact-org" name="organization" class="form-input" placeholder="e.g. Commercial Bank or Regulatory Authority" />
           </div>
 
           <div class="form-group">
             <label class="form-label" for="contact-service">Inquiry Purpose</label>
-            <select id="contact-service" class="form-select">
+            <select id="contact-service" name="purpose" class="form-select">
               <option value="consult">Fraud Supervision Consultation</option>
               <option value="advisory">Advisory &amp; Strategy Panel</option>
               <option value="academic">Research &amp; Speaking Engagement</option>
@@ -1254,11 +1277,17 @@
 
           <div class="form-group">
             <label class="form-label" for="contact-message">Inquiry Details</label>
-            <textarea id="contact-message" class="form-textarea" placeholder="Detail your specific supervision query, data requirements, or panel scope..." required></textarea>
+            <textarea id="contact-message" name="message" class="form-textarea" placeholder="Detail your specific supervision query, data requirements, or panel scope..." required></textarea>
           </div>
 
-          <!-- Exactly one Crimson primary element: The Submit Button -->
-          <button type="submit" class="btn btn-primary radius-lg" style="align-self: flex-start; padding: 0 var(--brand-size-xl); height: 42px;">Submit Inquiry</button>
+          <!-- Honeypot: hidden from humans, filters basic spam bots -->
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+          <div style="display: flex; align-items: center; gap: var(--brand-size);">
+            <!-- Exactly one Crimson primary element: The Submit Button -->
+            <button type="submit" class="btn btn-primary radius-lg" style="padding: 0 var(--brand-size-xl); height: 42px;">Submit Inquiry</button>
+            <span id="form-status" role="status" style="font-size: var(--brand-font-size-sm);"></span>
+          </div>
         </form>
       </div>
     </section>
@@ -1273,7 +1302,7 @@
       <div style="display: flex; gap: var(--brand-size-lg)">
         <a href="#about">Overview</a>
         <a href="#timeline">Timeline</a>
-        <a href="#portfolio">Project</a>
+        <a href="#portfolio">Projects</a>
         <a href="#blog">Blog</a>
       </div>
     </div>
@@ -1348,6 +1377,62 @@
         }
       });
     });
+
+    // Contact form — AJAX submit to Formspree, no page reload
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+
+    contactForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      formStatus.textContent = 'Sending…';
+      formStatus.style.color = 'var(--brand-color-text-secondary)';
+
+      try {
+        const response = await fetch(contactForm.action, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' },
+        });
+
+        if (response.ok) {
+          formStatus.textContent = 'Thanks — your inquiry has been sent. I\'ll respond within 2 business days.';
+          formStatus.style.color = 'var(--brand-color-primary)';
+          contactForm.reset();
+        } else {
+          formStatus.textContent = 'Something went wrong. Please email azharuddin.raz.kazi@gmail.com directly.';
+          formStatus.style.color = 'var(--brand-color-error)';
+        }
+      } catch (err) {
+        formStatus.textContent = 'Network error — please email azharuddin.raz.kazi@gmail.com directly.';
+        formStatus.style.color = 'var(--brand-color-error)';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    // Scroll-reveal: fade + slide up as sections and cards enter the viewport
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const revealTargets = document.querySelectorAll(
+        '.stat-card, .timeline-item, .project-showcase, .contact-layout, #blog .radius-lg'
+      );
+      revealTargets.forEach((el, i) => {
+        el.classList.add('reveal');
+        el.style.transitionDelay = `${Math.min(i % 4, 3) * 70}ms`;
+      });
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+      revealTargets.forEach(el => revealObserver.observe(el));
+    }
   </script>
 
   <!-- Vercel Web Analytics -->
