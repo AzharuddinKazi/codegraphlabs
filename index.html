@@ -624,7 +624,7 @@
     .timeline-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--brand-size-xs);
+      align-items: center;
       margin-top: var(--brand-size-sm);
     }
 
@@ -632,10 +632,12 @@
       font-family: var(--code-family);
       font-size: var(--brand-font-size-sm);
       color: var(--brand-color-text-secondary);
-      background-color: var(--brand-color-fill-secondary);
-      padding: 2px 8px;
-      border-radius: var(--brand-border-radius-xs);
-      border: var(--brand-line-width) solid var(--brand-color-border);
+    }
+
+    .tag:not(:last-child)::after {
+      content: '\00B7';
+      margin: 0 8px;
+      color: var(--brand-color-text-tertiary);
     }
 
     /* Single Project Feature Card */
@@ -1216,7 +1218,7 @@
 
       <div class="project-showcase radius-lg">
         <div class="project-info">
-          <span class="tag" style="align-self: flex-start; border-color: var(--brand-color-primary); color: var(--brand-color-primary); font-weight: 700;">ACTIVE DEVELOPMENT</span>
+          <span style="font-family: var(--code-family); font-size: var(--brand-font-size-sm); letter-spacing: 0.06em; color: var(--brand-color-primary); font-weight: 700;">ACTIVE DEVELOPMENT</span>
           <h3 style="font-size: var(--brand-font-size-heading-4); margin: var(--brand-size-xs) 0 var(--brand-size-sm)">Agent-DASC Architecture</h3>
           <p style="color: var(--brand-color-text-secondary); margin-bottom: var(--brand-size-md); line-height: 1.5">
             Agent-DASC is modeled directly on <strong>Google's DS-STAR agentic framework</strong>. It automates multi-step, heterogeneous data science tasks by coordinating eight specialized agents (Analyzer, Planner, Coder, Executor, Debugger, Router, Verifier, and Finalizer) through a LangGraph state machine — planning, executing in a sandboxed container, and iterating until a verifier judges the result sound.
