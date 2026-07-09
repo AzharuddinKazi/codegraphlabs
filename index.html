@@ -670,6 +670,66 @@
       justify-content: space-between;
     }
 
+    /* Testimonials */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--brand-size-md);
+      align-items: start;
+    }
+
+    .testimonial-card {
+      background-color: var(--brand-color-bg-container);
+      border: var(--brand-line-width) solid var(--brand-color-border);
+      padding: var(--brand-size-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--brand-size-md);
+      height: 100%;
+    }
+
+    .testimonial-card.featured {
+      border-color: var(--brand-color-primary);
+    }
+
+    .testimonial-mark {
+      font-family: Georgia, serif;
+      font-size: 40px;
+      line-height: 1;
+      color: var(--brand-color-text-tertiary);
+    }
+
+    .testimonial-card.featured .testimonial-mark {
+      color: var(--brand-color-primary);
+    }
+
+    .testimonial-quote {
+      font-size: var(--brand-font-size);
+      line-height: 1.6;
+      color: var(--brand-color-text);
+      flex-grow: 1;
+    }
+
+    .testimonial-attribution {
+      border-top: var(--brand-line-width) solid var(--brand-color-border);
+      padding-top: var(--brand-size-sm);
+    }
+
+    .testimonial-name { font-weight: 700; font-size: var(--brand-font-size); color: var(--brand-color-text); }
+    .testimonial-role { font-size: var(--brand-font-size-sm); color: var(--brand-color-text-secondary); margin-top: 2px; }
+
+    .testimonial-relation {
+      display: block;
+      font-family: var(--code-family);
+      font-size: 11.5px;
+      color: var(--brand-color-text-tertiary);
+      margin-top: 4px;
+    }
+
+    @media (max-width: 860px) {
+      .testimonial-grid { grid-template-columns: 1fr; }
+    }
+
     /* Contact Form styling */
     .contact-layout {
       display: grid;
@@ -1260,6 +1320,47 @@
       <div style="border: var(--brand-line-width) dashed var(--brand-color-border); padding: var(--brand-size-xxl) var(--brand-size-xl); text-align: center;" class="radius-lg">
         <p style="color: var(--brand-color-text-secondary); font-size: var(--brand-font-size-lg);">Technical articles and documentation are currently in preparation.</p>
         <p style="color: var(--brand-color-text-tertiary); font-size: var(--brand-font-size-sm); margin-top: var(--brand-size-xs)">Check back soon for briefs on model governance, DS-STAR execution cycles, and analytics pipelines.</p>
+      </div>
+    </section>
+
+    <!-- 6.5 · TESTIMONIALS -->
+    <section id="testimonials" class="section wrap">
+      <div class="section-head">
+        <span class="kicker">Recommendations</span>
+        <h2 class="section-title">What colleagues have said</h2>
+        <p class="section-desc">A few words from managers, clients, and teammates across my career.</p>
+      </div>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-card featured radius-lg">
+          <div class="testimonial-mark">&ldquo;</div>
+          <p class="testimonial-quote">I have known Azhar for more than 6 years. In fact we have recruited him into DXC Technology after a tough entrance test and a rigorous interview process with hundreds in the competition. He has good knowledge of Data Science fundamentals and he is excellent in hands-on Python programming. He is always learning new things in data science. Azhar brings in the qualities of focus-on-work and team-spirit. We had great fun and success in multiple international trips and projects.</p>
+          <div class="testimonial-attribution">
+            <div class="testimonial-name">Sitaram Ramachandrula</div>
+            <div class="testimonial-role">Executive Director, JPMorgan Chase</div>
+            <span class="testimonial-relation">&mdash; Direct manager</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card radius-lg">
+          <div class="testimonial-mark">&ldquo;</div>
+          <p class="testimonial-quote">Azharuddin Kazi is a dedicated, focused and objective professional. He worked on a complex project as a data scientist and made the deliveries as agreed.</p>
+          <div class="testimonial-attribution">
+            <div class="testimonial-name">Alexander Marques</div>
+            <div class="testimonial-role">Delivery Manager, Technology &amp; AI</div>
+            <span class="testimonial-relation">&mdash; Client</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card radius-lg">
+          <div class="testimonial-mark">&ldquo;</div>
+          <p class="testimonial-quote">I had the pleasure to work with Azhar on a very challenging project for an agribusiness firm in Brazil. Azhar demonstrated a lot of technical and interpersonal skills — his work was oriented toward building a complex predictive model, which was deemed very good by the client. He stayed in Brazil for a long period, which brought him a lot of good multicultural experience. I definitely recommend him.</p>
+          <div class="testimonial-attribution">
+            <div class="testimonial-name">Carlos Henrique Faria Alves</div>
+            <div class="testimonial-role">Analytics Consultant &amp; Higher Education Professor</div>
+            <span class="testimonial-relation">&mdash; Teammate</span>
+          </div>
+        </div>
       </div>
     </section>
 
