@@ -454,6 +454,45 @@
       max-width: 360px;
     }
 
+    /* Employer Wordmark Strip */
+    .employer-strip {
+      padding-top: var(--brand-size-xl);
+      padding-bottom: var(--brand-size-xl);
+      border-bottom: var(--brand-line-width) solid var(--brand-color-border-secondary);
+    }
+
+    .employer-strip-label {
+      font-family: var(--code-family);
+      font-size: var(--brand-font-size-sm);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brand-color-text-secondary);
+      margin-bottom: var(--brand-size);
+    }
+
+    .employer-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: clamp(24px, 4vw, 48px);
+    }
+
+    .employer-name {
+      font-family: var(--display-family);
+      font-weight: 700;
+      font-size: clamp(15px, 2.2vw, 19px);
+      letter-spacing: -0.01em;
+      color: var(--brand-color-text);
+      opacity: 0.6;
+      white-space: nowrap;
+      transition: opacity var(--brand-motion-duration-fast);
+    }
+
+    .employer-name:hover {
+      opacity: 1;
+    }
+
     /* Key Stats Grid */
     .stats-grid {
       display: grid;
@@ -870,10 +909,6 @@
       .nav-links li:last-child a {
         border-bottom: none;
       }
-
-      .nav-actions .btn-secondary {
-        display: none;
-      }
     }
   </style>
 </head>
@@ -931,7 +966,6 @@
             <path class="moon-icon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
-        <a href="#contact" class="btn btn-secondary radius-lg">Consultation</a>
         <!-- Mobile nav toggle -->
         <button id="nav-toggle" class="nav-toggle-btn radius-sm" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
           <svg class="icon-menu" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
@@ -1031,6 +1065,17 @@
         </div>
       </div>
     </section>
+
+    <!-- 2.5 · EMPLOYER WORDMARK STRIP -->
+    <div class="employer-strip wrap">
+      <div class="employer-strip-label">Experience across</div>
+      <div class="employer-row">
+        <span class="employer-name">UAE Financial Regulatory Authority</span>
+        <span class="employer-name">Deloitte &amp; Touché</span>
+        <span class="employer-name">DXC Technology</span>
+        <span class="employer-name">Nabler Web Solutions</span>
+      </div>
+    </div>
 
     <!-- 3 · METRICS & STATS SECTION -->
     <section id="track-record" class="section wrap">
@@ -1216,12 +1261,12 @@
       </div>
     </section>
 
-    <!-- 7 · CONTACT SECTION (Removed Current Office) -->
+    <!-- 7 · CONTACT SECTION -->
     <section id="contact" class="section wrap" style="border-bottom: none;">
       <div class="section-head">
         <span class="kicker">Get in Touch</span>
-        <h2 class="section-title">Schedule an AI supervision consult or panel session</h2>
-        <p class="section-desc">Available for technical roundtables, expert advisory panels, and specialized risk consulting.</p>
+        <h2 class="section-title">Let's connect</h2>
+        <p class="section-desc">Have a question or want to get in touch? Send a message below.</p>
       </div>
 
       <div class="contact-layout">
@@ -1235,9 +1280,9 @@
             </div>
           </div>
           <div class="contact-method">
-            <div class="contact-method-title">CURRENT AVAILABILITY</div>
+            <div class="contact-method-title">LOCATION</div>
             <div class="contact-method-value">
-              Based in Dubai/Abu Dhabi, UAE (GST). Open to advisory panels and roundtables alongside my current regulatory role.
+              Based in Dubai/Abu Dhabi, UAE (GST).
             </div>
           </div>
           <div class="contact-method">
@@ -1253,32 +1298,17 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="contact-name">Full Name</label>
-              <input type="text" id="contact-name" name="name" class="form-input" placeholder="e.g. Dr. Emily Carter" required />
+              <input type="text" id="contact-name" name="name" class="form-input" placeholder="e.g. Jane Doe" required />
             </div>
             <div class="form-group">
               <label class="form-label" for="contact-email">Email Address</label>
-              <input type="email" id="contact-email" name="email" class="form-input" placeholder="e.g. emily@entity.gov" required />
+              <input type="email" id="contact-email" name="email" class="form-input" placeholder="e.g. jane@example.com" required />
             </div>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="contact-org">Organization / Institution</label>
-            <input type="text" id="contact-org" name="organization" class="form-input" placeholder="e.g. Commercial Bank or Regulatory Authority" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="contact-service">Inquiry Purpose</label>
-            <select id="contact-service" name="purpose" class="form-select">
-              <option value="consult">Fraud Supervision Consultation</option>
-              <option value="advisory">Advisory &amp; Strategy Panel</option>
-              <option value="academic">Research &amp; Speaking Engagement</option>
-              <option value="other">General Query</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="contact-message">Inquiry Details</label>
-            <textarea id="contact-message" name="message" class="form-textarea" placeholder="Detail your specific supervision query, data requirements, or panel scope..." required></textarea>
+            <label class="form-label" for="contact-message">Message</label>
+            <textarea id="contact-message" name="message" class="form-textarea" placeholder="What would you like to discuss?" required></textarea>
           </div>
 
           <!-- Honeypot: hidden from humans, filters basic spam bots -->
@@ -1286,7 +1316,7 @@
 
           <div style="display: flex; align-items: center; gap: var(--brand-size);">
             <!-- Exactly one Crimson primary element: The Submit Button -->
-            <button type="submit" class="btn btn-primary radius-lg" style="padding: 0 var(--brand-size-xl); height: 42px;">Submit Inquiry</button>
+            <button type="submit" class="btn btn-primary radius-lg" style="padding: 0 var(--brand-size-xl); height: 42px;">Send Message</button>
             <span id="form-status" role="status" style="font-size: var(--brand-font-size-sm);"></span>
           </div>
         </form>
@@ -1398,7 +1428,7 @@
         });
 
         if (response.ok) {
-          formStatus.textContent = 'Thanks — your inquiry has been sent. I\'ll respond within 2 business days.';
+          formStatus.textContent = 'Thanks — your message has been sent. I\'ll respond within 2 business days.';
           formStatus.style.color = 'var(--brand-color-primary)';
           contactForm.reset();
         } else {
