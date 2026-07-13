@@ -288,6 +288,135 @@
       word-break: break-word;
     }
 
+    /* Series roadmap — fixed palette, does not follow the theme toggle */
+    .roadmap-block {
+      border-bottom: var(--brand-line-width) solid var(--brand-color-border);
+      padding-bottom: var(--brand-size-lg);
+      margin-bottom: var(--brand-size-md);
+    }
+
+    /* Disclaimer — personal views, not affiliated with employer */
+    .disclaimer-note {
+      border: var(--brand-line-width) solid var(--brand-color-border);
+      padding: var(--brand-size) var(--brand-size-lg);
+      margin-bottom: var(--brand-size-xl);
+      font-size: var(--brand-font-size-sm);
+      color: var(--brand-color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .disclaimer-note strong {
+      color: var(--brand-color-text);
+    }
+
+    .roadmap-block h2 {
+      font-size: var(--brand-font-size-heading-5);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .roadmap-block .roadmap-desc {
+      font-size: var(--brand-font-size-sm);
+      color: var(--brand-color-text-secondary);
+      margin-bottom: var(--brand-size);
+    }
+
+    .roadmap-stack {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .roadmap-box {
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .roadmap-box.is-planned {
+      background: #f7f8fa;
+      border: 1px solid #dfe2ea;
+      opacity: 0.55;
+    }
+
+    .roadmap-box.is-done {
+      background: #2b3040;
+      border: none;
+    }
+
+    .roadmap-box-title {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: #1c2029;
+    }
+
+    .roadmap-box.is-done .roadmap-box-title {
+      color: #ffffff;
+    }
+
+    .roadmap-box-subtitle {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 400;
+      font-size: 11px;
+      color: #8a90a2;
+      margin-top: 2px;
+    }
+
+    .roadmap-box.is-done .roadmap-box-subtitle {
+      color: #c4c8d4;
+    }
+
+    .roadmap-box-status {
+      font-family: 'Manrope', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8a90a2;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .roadmap-box.is-done .roadmap-box-status {
+      color: #ffffff;
+    }
+
+    .roadmap-connector {
+      text-align: center;
+      font-family: var(--code-family);
+      font-size: 11px;
+      color: #8a90a2;
+      padding: 6px 0;
+    }
+
+    .roadmap-progress {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 2px 0 4px;
+    }
+
+    .roadmap-progress::before,
+    .roadmap-progress::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #c81d25;
+    }
+
+    .roadmap-progress span {
+      font-family: 'Manrope', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #c81d25;
+      white-space: nowrap;
+    }
+
     .article-footer-nav {
       margin-top: var(--brand-size-xl);
       padding-top: var(--brand-size-lg);
@@ -343,6 +472,81 @@
       </div>
 
       <article class="section article-content">
+        <div class="disclaimer-note">
+          <strong>Disclaimer:</strong> This post reflects my own personal views and research, done independently and in public. It does not represent, and should not be attributed to, the position of the Central Bank of the UAE or any employer. I am not speaking in any official or professional capacity here.
+        </div>
+
+        <div class="roadmap-block">
+          <h2>The Series</h2>
+          <p class="roadmap-desc">Seven posts, each building on the last.</p>
+
+          <div class="roadmap-stack">
+            <div class="roadmap-box is-planned">
+              <div>
+                <div class="roadmap-box-title">7 &middot; What's Next</div>
+                <div class="roadmap-box-subtitle">Unified ledgers, tokenized deposits, open questions</div>
+              </div>
+              <span class="roadmap-box-status">Planned</span>
+            </div>
+            <div class="roadmap-connector">7 &uarr; builds on 6</div>
+
+            <div class="roadmap-box is-planned">
+              <div>
+                <div class="roadmap-box-title">6 &middot; CBDC vs. Stablecoins vs. Crypto</div>
+                <div class="roadmap-box-subtitle">Untangling three different things people conflate</div>
+              </div>
+              <span class="roadmap-box-status">Planned</span>
+            </div>
+            <div class="roadmap-connector">6 &uarr; builds on 5</div>
+
+            <div class="roadmap-box is-planned">
+              <div>
+                <div class="roadmap-box-title">5 &middot; Privacy &amp; the Compliance Tightrope</div>
+                <div class="roadmap-box-subtitle">Where AML traceability meets surveillance risk</div>
+              </div>
+              <span class="roadmap-box-status">Planned</span>
+            </div>
+            <div class="roadmap-connector">5 &uarr; builds on 4</div>
+
+            <div class="roadmap-box is-planned">
+              <div>
+                <div class="roadmap-box-title">4 &middot; The Global Race</div>
+                <div class="roadmap-box-subtitle">Who's live, who's piloting, who's pausing</div>
+              </div>
+              <span class="roadmap-box-status">Planned</span>
+            </div>
+            <div class="roadmap-connector">4 &uarr; builds on 3</div>
+
+            <div class="roadmap-box is-planned">
+              <div>
+                <div class="roadmap-box-title">3 &middot; The Macroeconomic Engine</div>
+                <div class="roadmap-box-subtitle">Banks, monetary policy, and disintermediation</div>
+              </div>
+              <span class="roadmap-box-status">Planned</span>
+            </div>
+            <div class="roadmap-connector">3 &uarr; builds on 2</div>
+
+            <div class="roadmap-box is-planned">
+              <div>
+                <div class="roadmap-box-title">2 &middot; Architecture</div>
+                <div class="roadmap-box-subtitle">Retail/wholesale, token/account, ledger design choices</div>
+              </div>
+              <span class="roadmap-box-status">Planned</span>
+            </div>
+            <div class="roadmap-connector">2 &uarr; builds on 1</div>
+
+            <div class="roadmap-progress"><span>You are here — 1 of 7 complete</span></div>
+
+            <div class="roadmap-box is-done">
+              <div>
+                <div class="roadmap-box-title">1 &middot; First Principles</div>
+                <div class="roadmap-box-subtitle">Legal tender, and what a CBDC actually is</div>
+              </div>
+              <span class="roadmap-box-status">Done</span>
+            </div>
+          </div>
+        </div>
+
         <p>
           I joined the financial crime and market conduct team with an engineering background, not a banking one. The acronyms came fast — AML, CFT, KYC, LFI etc — but the one that stopped me was CBDC. Central bank digital currency. Someone used it three times in one paragraph and I realized I couldn't define any of the three words with confidence. What's "central bank money" as opposed to regular money? Is CBDC a cryptocurrency? Is it just cash with an app?
         </p>
@@ -441,7 +645,6 @@
         </div>
 
         <div class="article-footer-nav">
-          <span class="next-label">Post 2 of 7 — account-based vs. token-based CBDC design — coming soon.</span>
           <a href="../index.html#blog" class="btn btn-secondary radius-lg">&larr; Back to all posts</a>
         </div>
       </article>
@@ -450,13 +653,16 @@
 
   <!-- Footer -->
   <footer style="margin-top: 80px; border-top: var(--brand-line-width) solid var(--brand-color-border);">
-    <div class="wrap footer-container" style="display: flex; justify-content: space-between; align-items: center; padding: var(--brand-size-xl) 0;">
+    <div class="wrap footer-container" style="display: flex; justify-content: space-between; align-items: center; padding: var(--brand-size-xl) 0 0;">
       <div style="font-size: var(--brand-font-size-sm); color: var(--brand-color-text-secondary);">
         &copy; 2026 Azharuddin Kazi. All rights reserved.
       </div>
       <div>
         <a href="../index.html">Back to Portfolio</a>
       </div>
+    </div>
+    <div class="wrap" style="padding-bottom: var(--brand-size-xl); font-size: var(--brand-font-size-sm); color: var(--brand-color-text-tertiary);">
+      Views expressed on this site are my own and do not represent or reflect the position of the Central Bank of the UAE or any employer.
     </div>
   </footer>
 
