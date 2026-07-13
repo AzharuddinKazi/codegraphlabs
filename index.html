@@ -670,6 +670,39 @@
       justify-content: space-between;
     }
 
+    /* Blog post card */
+    .blog-card {
+      background-color: var(--brand-color-bg-container);
+      border: var(--brand-line-width) solid var(--brand-color-border);
+      padding: var(--brand-size-xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--brand-size-sm);
+      transition: transform var(--brand-motion-duration-mid) var(--brand-motion-ease-out),
+                  border-color var(--brand-motion-duration-mid) var(--brand-motion-ease-out);
+    }
+
+    .blog-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--brand-color-primary);
+    }
+
+    .blog-card-meta {
+      font-family: var(--code-family);
+      font-size: var(--brand-font-size-sm);
+      color: var(--brand-color-text-tertiary);
+    }
+
+    .blog-card-title {
+      font-size: var(--brand-font-size-heading-4);
+      margin-top: 2px;
+    }
+
+    .blog-card-desc {
+      color: var(--brand-color-text-secondary);
+      line-height: 1.5;
+    }
+
     /* Testimonials */
     .testimonial-grid {
       display: grid;
@@ -1308,7 +1341,7 @@
       </div>
     </section>
 
-    <!-- 6 · BLOGPOST SECTION (Emptied for now per request) -->
+    <!-- 6 · BLOGPOST SECTION -->
     <section id="blog" class="section wrap">
       <div class="section-head">
         <span class="kicker">Insights &amp; Writings</span>
@@ -1316,11 +1349,11 @@
         <p class="section-desc">Reflections on building analytics agents, risk architectures, and data frameworks.</p>
       </div>
 
-      <!-- Clean design system-compliant Empty State -->
-      <div style="border: var(--brand-line-width) dashed var(--brand-color-border); padding: var(--brand-size-xxl) var(--brand-size-xl); text-align: center;" class="radius-lg">
-        <p style="color: var(--brand-color-text-secondary); font-size: var(--brand-font-size-lg);">Technical articles and documentation are currently in preparation.</p>
-        <p style="color: var(--brand-color-text-tertiary); font-size: var(--brand-font-size-sm); margin-top: var(--brand-size-xs)">Check back soon for briefs on model governance, DS-STAR execution cycles, and analytics pipelines.</p>
-      </div>
+      <a href="blog/cbdc-01-legal-tender-and-cbdc.html" class="blog-card radius-lg">
+        <div class="blog-card-meta">CBDC SERIES &middot; POST 1 OF 5 &middot; 9 MIN READ</div>
+        <h3 class="blog-card-title">First Principles: What Is Legal Tender, and What Is a CBDC?</h3>
+        <p class="blog-card-desc">Before the design questions and the policy debate: what legal tender actually means, and what a central bank digital currency actually is, according to the institutions building them &mdash; sourced from the Fed, the Bank of England, the BIS, the IMF, and the ECB.</p>
+      </a>
     </section>
 
     <!-- 6.5 · TESTIMONIALS -->
