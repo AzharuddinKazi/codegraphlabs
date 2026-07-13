@@ -196,12 +196,27 @@
       font-weight: 700;
     }
 
-    .series-note {
+    .header-notes {
       margin-top: var(--brand-size-lg);
       border-left: 3px solid var(--brand-color-border);
       padding-left: var(--brand-size);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       font-size: var(--brand-font-size-sm);
       color: var(--brand-color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .header-notes strong {
+      color: var(--brand-color-text);
+    }
+
+    .roadmap-lead {
+      font-size: var(--brand-font-size-lg);
+      color: var(--brand-color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--brand-size);
     }
 
     .article-content {
@@ -290,23 +305,10 @@
 
     /* Series roadmap — fixed palette, does not follow the theme toggle */
     .roadmap-block {
+      border-top: var(--brand-line-width) solid var(--brand-color-border);
       border-bottom: var(--brand-line-width) solid var(--brand-color-border);
+      padding-top: var(--brand-size-lg);
       padding-bottom: var(--brand-size-lg);
-      margin-bottom: var(--brand-size-md);
-    }
-
-    /* Disclaimer — personal views, not affiliated with employer */
-    .disclaimer-note {
-      border: var(--brand-line-width) solid var(--brand-color-border);
-      padding: var(--brand-size) var(--brand-size-lg);
-      margin-bottom: var(--brand-size-xl);
-      font-size: var(--brand-font-size-sm);
-      color: var(--brand-color-text-secondary);
-      line-height: 1.6;
-    }
-
-    .disclaimer-note strong {
-      color: var(--brand-color-text);
     }
 
     .roadmap-block h2 {
@@ -315,11 +317,6 @@
       margin-bottom: 4px;
     }
 
-    .roadmap-block .roadmap-desc {
-      font-size: var(--brand-font-size-sm);
-      color: var(--brand-color-text-secondary);
-      margin-bottom: var(--brand-size);
-    }
 
     .roadmap-stack {
       display: flex;
@@ -336,9 +333,8 @@
     }
 
     .roadmap-box.is-planned {
-      background: #f7f8fa;
-      border: 1px solid #dfe2ea;
-      opacity: 0.55;
+      background: rgba(247, 248, 250, 0.6);
+      border: 1px solid rgba(223, 226, 234, 0.8);
     }
 
     .roadmap-box.is-done {
@@ -466,19 +462,28 @@
           <span>·</span>
           <span>9 min read</span>
         </div>
-        <p class="series-note">
-          First in a series on central bank digital currencies, written while learning the domain in public. This post covers the two foundational definitions everything downstream assumes: what legal tender actually means, and what a CBDC actually is.
-        </p>
+        <div class="header-notes">
+          <p>First in a series on central bank digital currencies, written while learning the domain in public. This post covers the two foundational definitions everything downstream assumes: what legal tender actually means, and what a CBDC actually is.</p>
+          <p><strong>Disclaimer:</strong> These are my own personal views and independent research. They do not represent, and should not be attributed to, the Central Bank of the UAE or any employer.</p>
+        </div>
       </div>
 
       <article class="section article-content">
-        <div class="disclaimer-note">
-          <strong>Disclaimer:</strong> This post reflects my own personal views and research, done independently and in public. It does not represent, and should not be attributed to, the position of the Central Bank of the UAE or any employer. I am not speaking in any official or professional capacity here.
-        </div>
+        <p>
+          I joined the financial crime and market conduct team with an engineering background, not a banking one. The acronyms came fast — AML, CFT, KYC, LFI etc — but the one that stopped me was CBDC. Central bank digital currency. Someone used it three times in one paragraph and I realized I couldn't define any of the three words with confidence. What's "central bank money" as opposed to regular money? Is CBDC a cryptocurrency? Is it just cash with an app?
+        </p>
+
+        <p>
+          I went looking for a definition and found a pile of half-definitions instead — some confusing CBDC with stablecoins, some treating "it's digital cash" as settled fact, a few treating the whole thing as a conspiracy. So I went to the source documents and started from the bottom.
+        </p>
+
+        <p>
+          This post is the bottom layer. Before getting into how a CBDC is built (Post 2) or what it does to monetary policy (Posts 3 onward), I want to start from first principles — the smallest true statements everything else in this series rests on. Not what a CBDC is <em>for</em>, not what it might <em>do</em> — just what makes something legal tender, and what a CBDC actually is, according to the institutions building them. Everything downstream in this series assumes you've got these two straight.
+        </p>
 
         <div class="roadmap-block">
           <h2>The Series</h2>
-          <p class="roadmap-desc">Seven posts, each building on the last.</p>
+          <p class="roadmap-lead">Seven posts, each building on the last — here's where this one sits.</p>
 
           <div class="roadmap-stack">
             <div class="roadmap-box is-planned">
@@ -546,18 +551,6 @@
             </div>
           </div>
         </div>
-
-        <p>
-          I joined the financial crime and market conduct team with an engineering background, not a banking one. The acronyms came fast — AML, CFT, KYC, LFI etc — but the one that stopped me was CBDC. Central bank digital currency. Someone used it three times in one paragraph and I realized I couldn't define any of the three words with confidence. What's "central bank money" as opposed to regular money? Is CBDC a cryptocurrency? Is it just cash with an app?
-        </p>
-
-        <p>
-          I went looking for a definition and found a pile of half-definitions instead — some confusing CBDC with stablecoins, some treating "it's digital cash" as settled fact, a few treating the whole thing as a conspiracy. So I went to the source documents and started from the bottom.
-        </p>
-
-        <p>
-          This post is the bottom layer. Before getting into how a CBDC is built (Post 2) or what it does to monetary policy (Posts 3 onward), I want to start from first principles — the smallest true statements everything else in this series rests on. Not what a CBDC is <em>for</em>, not what it might <em>do</em> — just what makes something legal tender, and what a CBDC actually is, according to the institutions building them. Everything downstream in this series assumes you've got these two straight.
-        </p>
 
         <h2>Legal tender is narrower than people think</h2>
 
