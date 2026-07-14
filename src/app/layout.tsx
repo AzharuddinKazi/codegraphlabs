@@ -7,6 +7,9 @@ export const metadata: Metadata = {
     'Personal portfolio and blog of Azharuddin Kazi, Specialist Data Scientist in financial supervision and risk modeling.',
 };
 
+// Deliberately minimal — this wraps /studio too, which needs full control
+// of its own viewport. Site chrome (nav/footer) lives in (site)/layout.tsx
+// instead, scoped only to the actual site pages via a route group.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
