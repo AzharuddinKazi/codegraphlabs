@@ -23,8 +23,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'Bad request' }, { status: 400 });
     }
 
+    // Always revalidate the homepage for any content change
     revalidatePath('/');
-    return NextResponse.json({ revalidated: true, type: body._type, now: Date.now() });
+
+    // Revalidate specific dynamic routes if slug is present in body
+    const slug = typeof (body as any).slug === 'string' 
+      ? (body as any).slug 
+      : (body as any).slug?.current;
+
+    if (body._type === 'post' && slug) {
+      revalidatePath(`/blog/${slug}`);
+    } else if (body._type === 'project' && slug) {
+      revalidatePath(`/projects/${slug}`);
+    }
+
+    return NextResponse.json({ revalidated: true, type: body._type, slug: slug || null, now: Date.now() });
   } catch (err) {
     return NextResponse.json({ message: (err as Error).message }, { status: 500 });
   }
