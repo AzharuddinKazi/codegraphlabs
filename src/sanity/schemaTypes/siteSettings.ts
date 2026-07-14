@@ -38,5 +38,11 @@ export default defineType({
       description: 'Rendered in the footer of every page and at the top of blog posts.',
     }),
     defineField({ name: 'resumeUrl', title: 'Résumé File URL', type: 'url' }),
+    defineField({
+      name: 'aboutText',
+      title: 'About Section Text',
+      type: 'text',
+      description: 'The about text displayed in the header/about section of the home page.',
+    }),
   ],
 });

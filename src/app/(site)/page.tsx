@@ -19,7 +19,8 @@ const HOMEPAGE_QUERY = `{
     linkedinUrl,
     githubUrl,
     location,
-    responseTime
+    responseTime,
+    aboutText
   },
   "experience": *[_type == "experience"] | order(order asc, startDate desc){
     _id, org, role, location, startDate, endDate, active, summary, bullets, tags
@@ -48,6 +49,7 @@ type HomepageData = {
     githubUrl?: string;
     location?: string;
     responseTime?: string;
+    aboutText?: string;
   } | null;
   experience: Array<{
     _id: string;
@@ -106,7 +108,7 @@ export default async function HomePage() {
       <SignatureBand
         heroKicker={data.settings?.heroKicker}
         heroTitle={data.settings?.heroTitle}
-        heroDescription={data.settings?.heroDescription}
+        heroDescription={data.settings?.aboutText || data.settings?.heroDescription}
         heroYearsValue={data.settings?.heroYearsValue}
         heroYearsCaption={data.settings?.heroYearsCaption}
       />
