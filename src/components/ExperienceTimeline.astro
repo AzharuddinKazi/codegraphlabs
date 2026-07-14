@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+
+const experienceList = await getCollection('experience');
+const sortedExperience = experienceList.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="timeline" class="section wrap">
+  <div class="section-head">
+    <span class="kicker">Experience</span>
+    <h2 class="section-title">A career built on enterprise data architecture</h2>
+    <p class="section-desc">Delivering advanced machine learning, forecasting, and AI systems.</p>
+  </div>
+
+  <div class="timeline">
+    {sortedExperience.map((role) => (
+      <div class={`timeline-item reveal-on-scroll ${role.data.current ? 'active' : ''}`}>
+        <div class="timeline-marker"></div>
+        <div class="timeline-date">{role.data.startDate} — {role.data.endDate}</div>
+        <h3 class="timeline-title">{role.data.title}</h3>
+        <div class="timeline-org">{role.data.company} | {role.data.location}</div>
+        <p class="timeline-content">
+          {role.data.description}
+        </p>
+        <ul class="timeline-bullets">
+          {role.data.bullets.map((bullet) => (
+            <li>{bullet}</li>
+          ))}
+        </ul>
+        <div class="timeline-tags">
+          {role.data.tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

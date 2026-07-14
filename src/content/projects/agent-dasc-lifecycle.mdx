@@ -1,0 +1,123 @@
+---
+title: "Agent-DASC Product Lifecycle"
+status: "Core Pipeline: Built & Tested"
+type: "personal-build"
+statHighlight: "+32pp"
+statCaption: "DS-STAR's published benchmark improvement over the same frontier LLM used alone, on hard multi-file analytical tasks (DABStep)."
+repoUrl: "https://github.com/AzharuddinKazi/Agent-DASC/tree/docs/product-lifecycle"
+branch: "docs/product-lifecycle"
+architecture: "Google DS-STAR Paper"
+focus: "Planning & Verification"
+outcome: "Autonomous Analysis"
+order: 1
+---
+import StatHighlight from '../../components/StatHighlight.astro';
+import DsStarSvg from '../../components/DsStarSvg.astro';
+import MaturityTable from '../../components/MaturityTable.astro';
+import AdrList from '../../components/AdrList.astro';
+
+A self-directed architecture & product-design exercise — designed against a realistic, hypothetical financial-crime supervision scenario, not an actual client engagement.
+
+### 1. Concept & DS-STAR Foundations
+
+**Agent-DASC** is an agentic data science system built on the architecture from Google's **DS-STAR** paper (*"DS-STAR: Data Science Agent via Iterative Planning and Verification,"* arXiv:2509.21825). The goal: let a non-technical analyst type a question in plain English — e.g. *"Which institutions have the highest fraud loss rate relative to transaction volume this quarter?"* — and get back a cited, data-backed answer, without writing Python or SQL.
+
+Rather than a single-shot LLM query, DS-STAR runs a structured multi-agent loop that plans, codes, executes in a sandbox, verifies, and iterates — closer to how a human data scientist actually works through an ambiguous analytical question.
+
+<StatHighlight 
+  num="+32pp" 
+  cap="DS-STAR's own published benchmark: on hard multi-file analytical tasks (DABStep), the structured pipeline scores 45.24% vs. 12.70% for the same frontier LLM used alone — evidence that orchestration, not raw model size, is what solves this class of problem." 
+/>
+
+<DsStarSvg />
+
+### 2. What's Actually Built vs. Designed
+
+It's easy to make an agent framework look further along than it is. Here's the honest breakdown:
+
+<MaturityTable items={[
+  { label: "8-agent LangGraph state machine (Analyzer → Planner → Coder → Executor → Debugger → Router → Verifier → Finalizer), with real conditional routing and a debug-retry loop", status: "BUILT + TESTED" },
+  { label: "Docker sandbox execution — isolated container, no network, memory-capped, non-root", status: "BUILT + TESTED" },
+  { label: "Test suite covering graph construction, planner logic, and end-to-end runs", status: "BUILT + TESTED" },
+  { label: "Report-generation mode (sub-question decomposition + synthesis for open-ended research questions)", status: "DESIGNED, NOT BUILT" },
+  { label: "Auth, RBAC, PII masking, tamper-evident audit log", status: "DESIGNED, NOT BUILT" },
+  { label: "Frontend application", status: "DESIGNED, NOT BUILT" }
+]} />
+
+In plain terms: the core reasoning loop is real, running code with a passing test suite — not a mock. The production shell around it (security, reporting mode, UI) exists as a fully-specified design, not yet implemented.
+
+### 3. Multi-Agent Pipeline Mechanics
+
+The real implementation runs eight specialized nodes through a LangGraph state machine, each with its own prompt contract:
+
+1. **Analyzer:** Profiles heterogeneous input files (CSV, JSON, Excel) to extract schema, row counts, and summary statistics before any plan is written.
+2. **Planner:** Formulates a structured, multi-step execution plan from the query and the Analyzer's output.
+3. **Coder:** Translates each plan step into a complete, self-contained Python script.
+4. **Executor:** Runs the script inside the sandboxed container and captures stdout/exit code.
+5. **Debugger:** On a non-zero exit code, receives both the traceback *and* dataset metadata (column headers, schema) — tracebacks alone are usually insufficient for data-centric bugs — and rewrites the script.
+6. **Router:** Decides whether to retry, proceed to verification, or escalate based on round state.
+7. **Verifier:** Acts as an LLM-based judge, issuing a pass/fail verdict against the original question.
+8. **Finalizer:** Assembles the verified result and explanation returned to the analyst.
+
+<figure class="cs-figure">
+  <img src="/assets/agent-dasc-pipeline.png" alt="UX design mockup showing the Agent-DASC pipeline mid-run: query, round budget, and live agent-by-agent trace (Analyzer, Planner, Executor, Verifier)" class="radius-lg" />
+  <figcaption>UX design mockup — an analysis in progress, showing the round budget and live per-agent trace. (Design artifact from the UX phase, not a live production screenshot — the frontend itself is not yet built.)</figcaption>
+</figure>
+
+### 4. Architecture Decisions
+
+A few of the tradeoffs that came up translating the paper into something deployable in a constrained, air-gapped enterprise environment:
+
+<AdrList items={[
+  {
+    q: "One Docker container per task, or a fresh one per round?",
+    a: "One persistent container per task, reused across rounds via docker exec. A fresh container per round means paying a multi-second cold start up to 20+ times per query. This is only safe because the Coder is required to emit a complete, self-contained script every round — so there's no cross-round state to leak."
+  },
+  {
+    q: "Sequential or parallel sub-questions?",
+    a: "Sequential by default, parallel behind a config flag — a deliberate departure from what the paper assumes, driven by shared, constrained GPU capacity in an on-premise/air-gapped deployment with multiple concurrent analysts. The paper doesn't have to think about this; a real enterprise deployment does."
+  },
+  {
+    q: "How to handle a script that prints 50,000 rows to stdout?",
+    a: "A hard 10KB stdout cap, with larger outputs redirected to file storage instead. This is framed as both a context-window control and a data-loss-prevention control — it also prevents a script from exfiltrating bulk data via print flooding, which matters in a regulated, air-gapped setting."
+  },
+  {
+    q: "Round budget — the paper defaults to 20. Why does this default to 5–6?",
+    a: "Faster analyst feedback. The paper's own data shows hard tasks average 5.6 rounds — so roughly half of hard queries would need an extension under a low default. The tradeoff is handled explicitly: a 40-round hard cap plus an 'Extend and continue' affordance in the UI, rather than silently forcing every query through 20 rounds regardless of difficulty."
+  }
+]} />
+
+### 5. Implementation Details
+
+Simplified for illustration — the real implementation is a LangGraph state machine (see `backend/agents/graph.py` in the repository), but this captures the core plan → execute → verify loop:
+
+```python
+class DSStarAgent:
+    def __init__(self, database, model):
+        self.planner = PlannerAgent(model)
+        self.coder = CoderAgent(model)
+        self.verifier = VerifierAgent(model)
+
+    def solve_query(self, user_query):
+        plan = self.planner.generate_plan(user_query)
+        result = self.coder.execute_steps(plan)
+        
+        # Iterative verification check
+        verdict = self.verifier.judge(result, user_query)
+        if verdict["status"] == "FAILED":
+            plan = self.planner.refine_plan(plan, verdict["reason"])
+            result = self.coder.execute_steps(plan)
+        return result
+```
+
+### 6. Running It as a Real Product Lifecycle
+
+The repository's `docs/product-lifecycle` branch treats this like a real pre-code process — discovery and PRD before a UX spec, a UX spec before a tech design doc — rather than jumping straight to code:
+
+<MaturityTable items={[
+  { label: "Discovery — 1-pager, DS-STAR paper analysis, requirements", status: "COMPLETE" },
+  { label: "PRD / functional spec", status: "DRAFT — 2 open questions" },
+  { label: "UX design spec — full mockup set", status: "COMPLETE" },
+  { label: "Technical design doc", status: "DRAFT — 2 sections in review" },
+  { label: "Security & privacy review, test strategy, work breakdown, launch plan", status: "NOT STARTED" }
+]} />

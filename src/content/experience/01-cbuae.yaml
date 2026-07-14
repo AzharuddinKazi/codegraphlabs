@@ -1,0 +1,17 @@
+title: "Specialist Data Scientist — Fraud Prevention & Supervision"
+company: "UAE Financial Regulatory Authority"
+location: "Dubai/Abu Dhabi, UAE"
+startDate: "MARCH 2026"
+endDate: "PRESENT"
+current: true
+description: "Design, deploy, and evaluate surveillance algorithms and supervision frameworks for domestic entities. Focus areas include:"
+bullets:
+  - "High-throughput transaction anomaly classification and network flow modeling."
+  - "Advising on risk frameworks and data governance models across domestic banking systems."
+  - "Supervising machine learning risk parameters and validating compliance scorecards."
+tags:
+  - "Financial Supervision"
+  - "Systemic Risk"
+  - "Graph Analytics"
+  - "ML Governance"
+order: 1

@@ -1,0 +1,16 @@
+title: "Technology Consultant"
+company: "DXC Technology"
+location: "Bangalore, India"
+startDate: "DECEMBER 2017"
+endDate: "OCTOBER 2019"
+current: false
+description: "Engineered predictive planning systems and proofs of concept:"
+bullets:
+  - "Developed a demand forecasting solution identifying an opportunity to increase the market share of a logistics company by 15% by building Monte Carlo simulations that simulate the flow of product throughout the country."
+  - "Built a PoC showcasing capabilities of voice analytics and its application in call center management."
+tags:
+  - "Monte Carlo Simulation"
+  - "Logistics Optimization"
+  - "Voice Analytics PoC"
+  - "R Programming"
+order: 4

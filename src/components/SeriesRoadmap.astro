@@ -1,0 +1,57 @@
+---
+interface Props {
+  currentPart: number;
+}
+
+const { currentPart } = Astro.props;
+
+const rawSteps = [
+  { part: 7, title: "What's Next", subtitle: "Unified ledgers, tokenized deposits, open questions" },
+  { part: 6, title: "CBDC vs. Stablecoins vs. Crypto", subtitle: "Untangling three different things people conflate" },
+  { part: 5, title: "Privacy & the Compliance Tightrope", subtitle: "Where AML traceability meets surveillance risk" },
+  { part: 4, title: "The Global Race", subtitle: "Who's live, who's piloting, who's pausing" },
+  { part: 3, title: "The Macroeconomic Engine", subtitle: "Banks, monetary policy, and disintermediation" },
+  { part: 2, title: "Architecture", subtitle: "Retail/wholesale, token/account, ledger design choices" },
+  { part: 1, title: "First Principles", subtitle: "Legal tender, and what a CBDC actually is" }
+];
+
+const steps = rawSteps.map((step) => ({
+  ...step,
+  isCurrent: step.part === currentPart,
+  statusClass: step.part <= currentPart ? 'is-done' : 'is-planned',
+  statusText: step.part <= currentPart ? 'Done' : 'Planned'
+}));
+---
+
+<div class="roadmap-block">
+  <h2>The Series</h2>
+  <p class="roadmap-lead">Seven posts, each building on the last — here's where this one sits.</p>
+
+  <div class="roadmap-stack">
+    {steps.map((step, index) => (
+      <Fragment>
+        {index > 0 && (
+          <div class="roadmap-connector">
+            {steps[index - 1].part} &uarr; builds on {step.part}
+          </div>
+        )}
+        
+        {step.isCurrent && (
+          <div class="roadmap-progress">
+            <span>You are here — {currentPart} of 7 complete</span>
+          </div>
+        )}
+        
+        <div class={`roadmap-box ${step.statusClass}`}>
+          <div>
+            <div class="roadmap-box-title">
+              {step.part} &middot; {step.title}
+            </div>
+            <div class="roadmap-box-subtitle">{step.subtitle}</div>
+          </div>
+          <span class="roadmap-box-status">{step.statusText}</span>
+        </div>
+      </Fragment>
+    ))}
+  </div>
+</div>

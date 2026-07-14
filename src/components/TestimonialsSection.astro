@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+
+const testimonialsList = await getCollection('testimonials');
+const sortedTestimonials = testimonialsList.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="testimonials" class="section wrap">
+  <div class="section-head">
+    <span class="kicker">Recommendations</span>
+    <h2 class="section-title">What colleagues have said</h2>
+    <p class="section-desc">A few words from managers, clients, and teammates across my career.</p>
+  </div>
+
+  <div class="testimonial-grid">
+    {sortedTestimonials.map((t) => (
+      <div class={`testimonial-card radius-lg reveal-on-scroll ${t.data.featured ? 'featured' : ''}`}>
+        <div class="testimonial-mark">&ldquo;</div>
+        <p class="testimonial-quote">{t.data.quote}</p>
+        <div class="testimonial-attribution">
+          <div class="testimonial-name">{t.data.name}</div>
+          <div class="testimonial-role">{t.data.role}</div>
+          <span class="testimonial-relation">&mdash; {t.data.relationship}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,48 @@
+<button id="theme-toggle" class="theme-toggle-btn radius-sm" aria-label="Toggle theme">
+  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+    <path class="sun-icon" d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" style="display: none;"></path>
+    <path class="sun-icon" d="M3 12h1M20 12h1M12 3v1M12 20v1" style="display: none;"></path>
+    <path class="moon-icon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+<script>
+  const setupThemeToggle = () => {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    if (!themeToggleBtn) return;
+    
+    const sunIcons = document.querySelectorAll('.sun-icon') as NodeListOf<SVGPathElement>;
+    const moonIcon = document.querySelector('.moon-icon') as SVGPathElement;
+    
+    // Set initial icons visibility
+    const isDark = document.body.classList.contains('dark');
+    if (isDark) {
+      if (moonIcon) moonIcon.style.display = 'none';
+      sunIcons.forEach(i => i.style.display = 'block');
+    } else {
+      if (moonIcon) moonIcon.style.display = 'block';
+      sunIcons.forEach(i => i.style.display = 'none');
+    }
+    
+    themeToggleBtn.addEventListener('click', () => {
+      const body = document.body;
+      const html = document.documentElement;
+      body.classList.toggle('dark');
+      html.classList.toggle('dark');
+      const nowDark = body.classList.contains('dark');
+      
+      localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+      
+      if (nowDark) {
+        if (moonIcon) moonIcon.style.display = 'none';
+        sunIcons.forEach(i => i.style.display = 'block');
+      } else {
+        if (moonIcon) moonIcon.style.display = 'block';
+        sunIcons.forEach(i => i.style.display = 'none');
+      }
+    });
+  };
+
+  setupThemeToggle();
+  document.addEventListener('astro:after-swap', setupThemeToggle);
+</script>

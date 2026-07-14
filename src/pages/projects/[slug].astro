@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projectEntries = await getCollection('projects');
+  return projectEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const { title, status, type, repoUrl, architecture, focus, outcome } = entry.data;
+
+const readableType = type === 'personal-build' ? 'Personal Build' : type === 'client-engagement' ? 'Client Engagement' : 'Employer Work';
+---
+
+<BaseLayout title={`${title} | Case Study — Azharuddin Kazi`} description={`Technical case study of ${title}`}>
+  <main class="wrap">
+    <div class="cs-header">
+      <span class="kicker">Case Study · {readableType}</span>
+      <h1 class="cs-title">{title}</h1>
+      
+      <div class="cs-meta-grid">
+        {architecture && (
+          <div class="cs-meta-item">
+            <div class="cs-meta-label">ARCHITECTURE</div>
+            <div class="cs-meta-val">{architecture}</div>
+          </div>
+        )}
+        {focus && (
+          <div class="cs-meta-item">
+            <div class="cs-meta-label">FOCUS</div>
+            <div class="cs-meta-val">{focus}</div>
+          </div>
+        )}
+        <div class="cs-meta-item">
+          <div class="cs-meta-label">STATUS</div>
+          <div class="cs-meta-val">{status}</div>
+        </div>
+        {outcome && (
+          <div class="cs-meta-item">
+            <div class="cs-meta-label">OUTCOME</div>
+            <div class="cs-meta-val" style="color: var(--brand-color-primary);">{outcome}</div>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <div class="section cs-grid">
+      <article class="cs-content">
+        <Content />
+      </article>
+
+      <aside class="cs-sidebar">
+        {repoUrl && (
+          <div class="side-card radius-lg">
+            <div class="side-card-accent">
+              <h4 style="font-size: var(--brand-font-size); font-weight: 700;">GITHUB REPOSITORY</h4>
+              <p style="font-size: var(--brand-font-size-sm); color: var(--brand-color-text-secondary); margin-top: 4px;">
+                Access code, design templates, and documentation on GitHub.
+              </p>
+            </div>
+            <hr style="border: none; border-top: var(--brand-line-width) solid var(--brand-color-border-secondary)" />
+            <a href={repoUrl} target="_blank" class="btn btn-secondary radius-lg" style="width: 100%;">View GitHub Repository</a>
+          </div>
+        )}
+      </aside>
+    </div>
+  </main>
+</BaseLayout>

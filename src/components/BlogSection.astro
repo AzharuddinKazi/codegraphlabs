@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+
+const blogPosts = await getCollection('blog');
+// Sort by series part if present, or title/date
+const sortedPosts = blogPosts.sort((a, b) => (a.data.part || 0) - (b.data.part || 0));
+---
+
+<section id="blog" class="section wrap">
+  <div class="section-head">
+    <span class="kicker">Insights & writings</span>
+    <h2 class="section-title">Technical documentation, case studies, and engineering briefs</h2>
+    <p class="section-desc">Reflections on building analytics agents, risk architectures, and data frameworks.</p>
+  </div>
+
+  <div class="blog-stack" style="display: flex; flex-direction: column; gap: var(--brand-size-md);">
+    {sortedPosts.map((post) => (
+      <a href={`/blog/${post.slug}`} class="blog-card radius-lg reveal-on-scroll">
+        <div class="blog-card-meta">
+          {post.data.series ? `${post.data.series.toUpperCase()} · ` : ''}
+          {post.data.part ? `POST ${post.data.part} OF ${post.data.totalParts || 7} · ` : ''}
+          {post.data.readingTime.toUpperCase()}
+        </div>
+        <h3 class="blog-card-title">{post.data.title}</h3>
+        <p class="blog-card-desc">{post.data.description}</p>
+      </a>
+    ))}
+  </div>
+</section>

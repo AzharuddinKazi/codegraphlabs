@@ -1,0 +1,21 @@
+title: "Senior Consultant, Engineering AI & Data"
+company: "Deloitte & Touche (M.E)"
+location: "Dubai, UAE"
+startDate: "JUNE 2022"
+endDate: "MARCH 2026"
+current: false
+description: "Delivered advanced AI solutions and digital transformation roadmaps for government and corporate clients:"
+bullets:
+  - "Implemented a Gen AI, RAG-based chat application for a government entity leveraging Dubai's open datasets, enabling natural language queries with responses generated through LlamaIndex Text-to-SQL."
+  - "Led the implementation of MLOps, compared the client's setup with industry best practices, and developed plans to improve their machine learning deployment."
+  - "Designed and implemented cardholder personas through analysis of transaction data for customers across Saudi Arabia (KSA), driving enhancements in customer experience and service personalization."
+  - "Carried out an employee turnover study with limited data, discovering important insights using Dataiku that helped shape the client's data science strategy."
+  - "Assisted in the upgrade of NEOM's marketing systems, identifying key areas for improvement and planning strategic upgrades."
+  - "Contributed to AI strategy development for government and private sector clients, defining AI governance frameworks and identifying high-impact AI use cases."
+tags:
+  - "Generative AI"
+  - "LlamaIndex"
+  - "Text-to-SQL"
+  - "MLOps"
+  - "Dataiku"
+order: 2
