@@ -1,0 +1,35 @@
+/*
+ * Base resets only, for this initial skeleton. The full design system
+ * (nav, signature band, cards, timeline, etc.) gets ported from
+ * legacy-static/index.html during the content-migration phase, once
+ * the Sanity-backed page components exist to receive it.
+ */
+
+:root {
+  --display-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  --code-family: 'Source Code Pro', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--brand-font-family);
+  font-size: var(--brand-font-size);
+  line-height: var(--brand-line-height);
+  color: var(--brand-color-text);
+  background-color: var(--brand-color-bg-layout);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--brand-color-link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--brand-color-link-hover);
+}
