@@ -1,4 +1,11 @@
-import { client } from '@/sanity/client';
+import { sanityFetch } from '@/sanity/client';
+import { isSanityConfigured } from '@/sanity/env';
+
+type SiteSettings = {
+  siteName?: string;
+  personName?: string;
+  tagline?: string;
+};
 
 const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
   siteName,
@@ -9,7 +16,7 @@ const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const settings = await client.fetch(SITE_SETTINGS_QUERY).catch(() => null);
+  const settings = await sanityFetch<SiteSettings>(SITE_SETTINGS_QUERY);
 
   return (
     <main style={{ padding: '64px 24px', maxWidth: 720, margin: '0 auto' }}>
@@ -20,8 +27,10 @@ export default async function HomePage() {
         {settings?.personName ?? 'Azharuddin Kazi'}
       </h1>
       <p style={{ marginTop: 8, color: 'var(--brand-color-text-secondary)' }}>
-        {settings?.tagline ??
-          'No siteSettings document found yet — create one in /studio to see it render here.'}
+        {!isSanityConfigured
+          ? 'Sanity environment variables are not set — see SETUP.md.'
+          : (settings?.tagline ??
+            'No siteSettings document found yet — create one in /studio to see it render here.')}
       </p>
     </main>
   );
