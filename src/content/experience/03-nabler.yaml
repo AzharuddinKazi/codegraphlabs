@@ -1,0 +1,17 @@
+title: "Senior Data Scientist"
+company: "Nabler Web Solutions"
+location: "Bangalore, India"
+startDate: "OCTOBER 2019"
+endDate: "MAY 2022"
+current: false
+description: "Led consumer analytics and marketing forecasting engagements:"
+bullets:
+  - "Improved leads conversion rate by 30% by developing a propensity model on clickstream data that learns to differentiate between high and low propensity users visiting the website based on their behavior."
+  - "Built 10+ forecasting models to track 6 website KPIs and a system that notifies relevant stakeholders of any significant changes in KPI values depending on set business rules."
+  - "Implemented leads forecasting models that led to over a 20% increase in meeting leads acquisition goals."
+tags:
+  - "Propensity Modeling"
+  - "FB Prophet"
+  - "Time Series (ARIMA)"
+  - "GCP AI Platform"
+order: 3

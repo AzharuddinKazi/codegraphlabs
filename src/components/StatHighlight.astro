@@ -1,0 +1,13 @@
+---
+interface Props {
+  num: string;
+  cap: string;
+}
+
+const { num, cap } = Astro.props;
+---
+
+<div class="stat-highlight">
+  <div class="stat-num-lg">{num}</div>
+  <div class="stat-cap">{cap}</div>
+</div>

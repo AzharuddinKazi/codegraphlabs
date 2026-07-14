@@ -1,0 +1,70 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SignatureBand from '../components/SignatureBand.astro';
+import EmployerStrip from '../components/EmployerStrip.astro';
+import StatsGrid from '../components/StatsGrid.astro';
+import ExperienceTimeline from '../components/ExperienceTimeline.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+import BlogSection from '../components/BlogSection.astro';
+import TestimonialsSection from '../components/TestimonialsSection.astro';
+import ContactSection from '../components/ContactSection';
+
+const settingsEntry = await getEntry('settings', 'site');
+const settings = settingsEntry.data;
+const isPersonal = settings.siteMode === 'personal';
+---
+
+<BaseLayout>
+  <main>
+    <SignatureBand />
+    <EmployerStrip />
+    <StatsGrid />
+    
+    {isPersonal && <ExperienceTimeline />}
+    
+    <ProjectsSection />
+    <BlogSection />
+    <TestimonialsSection />
+    
+    <ContactSection 
+      client:load 
+      email={settings.email}
+      linkedinUrl={settings.linkedinUrl}
+      githubUrl={settings.githubUrl}
+      location={settings.location}
+      responseTime={settings.responseTime}
+      formEndpoint={settings.formEndpoint}
+    />
+  </main>
+</BaseLayout>
+
+<script>
+  const setupScrollReveal = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const revealTargets = document.querySelectorAll(
+      '.stat-card, .timeline-item, .project-showcase, .contact-layout, .blog-card, .testimonial-card'
+    );
+    
+    revealTargets.forEach((el, i) => {
+      const htmlEl = el as HTMLElement;
+      htmlEl.classList.add('reveal');
+      htmlEl.style.transitionDelay = `${Math.min(i % 4, 3) * 70}ms`;
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    revealTargets.forEach(el => revealObserver.observe(el));
+  };
+
+  setupScrollReveal();
+  document.addEventListener('astro:after-swap', setupScrollReveal);
+</script>

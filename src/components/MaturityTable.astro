@@ -1,0 +1,21 @@
+---
+interface Props {
+  items: Array<{ label: string; status: string }>;
+}
+
+const { items } = Astro.props;
+---
+
+<div class="maturity-table radius-lg">
+  {items.map((item) => {
+    const isBuilt = item.status.toLowerCase().includes('built') || item.status.toLowerCase().includes('complete');
+    return (
+      <div class="maturity-row">
+        <div class="maturity-label">{item.label}</div>
+        <div class={`maturity-status ${isBuilt ? 'is-built' : 'is-designed'}`}>
+          {item.status}
+        </div>
+      </div>
+    );
+  })}
+</div>

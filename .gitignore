@@ -20,3 +20,11 @@ yarn-error.log*
 # Workspace agent files (if any)
 .agents/
 .gemini/
+
+# Dependency directories
+node_modules/
+
+# Build outputs
+dist/
+.vercel/
+.astro/

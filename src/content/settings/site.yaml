@@ -1,0 +1,28 @@
+siteMode: "personal"
+logoText: "codegraphlabs"
+email: "azharuddin.raz.kazi@gmail.com"
+linkedinUrl: "https://linkedin.com/in/azhar-kazi"
+githubUrl: "https://github.com/AzharuddinKazi"
+location: "Based in Dubai/Abu Dhabi, UAE (GST)"
+responseTime: "Inquiries are typically answered within 2 business days"
+disclaimer: "Views expressed on this site are my own and do not represent or reflect the position of the Central Bank of the UAE or any employer."
+formEndpoint: "https://formspree.io/f/YOUR_FORM_ID"
+
+personal:
+  heroKicker: "Specialist Data Scientist"
+  heroTitle: "Engineering decision support frameworks for complex regulatory data."
+  heroDescription: "Seasoned Data Science Professional with 7 years of experience in delivering analytical solutions and decision support across diverse business sectors. Currently working as a Specialist Data Scientist within a federal regulatory body in the UAE."
+  ctaLabel: "Explore Projects"
+  ctaHref: "#portfolio"
+  secondaryCtaLabel: "View Professional Career"
+  secondaryCtaHref: "#timeline"
+
+agency:
+  heroKicker: "AI & Decision Support Advisory"
+  heroTitle: "Bespoke machine learning and agentic workflows for regulated industries."
+  heroDescription: "We architect, audit, and operate data science systems for enterprise, translating statistical rigor into production decision support."
+  ctaLabel: "See Our Work"
+  ctaHref: "#portfolio"
+  secondaryCtaLabel: "Book an Advisory Call"
+  secondaryCtaHref: "https://calendly.com/placeholder"
+  bookingUrl: "https://calendly.com/placeholder"

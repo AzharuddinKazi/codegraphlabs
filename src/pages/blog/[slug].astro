@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SeriesRoadmap from '../../components/SeriesRoadmap.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const { title, publishedAt, readingTime, series, part, totalParts, description, sources } = entry.data;
+---
+
+<BaseLayout title={`${title} | Blog — Azharuddin Kazi`} description={description}>
+  <main class="wrap">
+    <div class="article-wrap">
+      <div class="article-header">
+        <span class="kicker">
+          Blog {series ? `· ${series}` : ''} {part ? `· Post ${part} of ${totalParts || 7}` : ''}
+        </span>
+        <h1 class="article-title">{title}</h1>
+        <div class="article-meta">
+          <span><strong>Azharuddin Kazi</strong></span>
+          <span>·</span>
+          <span>{readingTime}</span>
+        </div>
+        <div class="header-notes">
+          <p>{description}</p>
+          <p><strong>Disclaimer:</strong> These are my own personal views and independent research. They do not represent, and should not be attributed to, the Central Bank of the UAE or any employer.</p>
+        </div>
+      </div>
+
+      <article class="section article-content">
+        <Content />
+
+        {series && part && <SeriesRoadmap currentPart={part} />}
+
+        {sources && sources.length > 0 && (
+          <div class="sources-block">
+            <h2>Sources</h2>
+            <ol class="sources-list">
+              {sources.map((src, index) => (
+                <li id={`src-${index + 1}`}>
+                  <span class="src-num">[{index + 1}]</span>
+                  <span>
+                    {src.name}{' '}
+                    <a href={src.url} target="_blank" rel="noopener noreferrer">
+                      {src.url.replace('https://', '')}
+                    </a>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+
+        <div class="article-footer-nav">
+          <a href="/#blog" class="btn btn-secondary radius-lg">&larr; Back to all posts</a>
+        </div>
+      </article>
+    </div>
+  </main>
+</BaseLayout>

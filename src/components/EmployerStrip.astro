@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+
+const experienceList = await getCollection('experience');
+const sortedExperience = experienceList.sort((a, b) => a.data.order - b.data.order);
+const companies = [...new Set(sortedExperience.map(e => e.data.company))];
+---
+
+<div class="employer-strip wrap">
+  <div class="employer-strip-label">Experience across</div>
+  <div class="employer-row">
+    {companies.map(company => (
+      <span class="employer-name">{company}</span>
+    ))}
+  </div>
+</div>

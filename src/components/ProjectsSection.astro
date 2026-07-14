@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+
+const projectsList = await getCollection('projects');
+const sortedProjects = projectsList.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="portfolio" class="section wrap">
+  <div class="section-head">
+    <span class="kicker">Projects</span>
+    <h2 class="section-title">Independent builds and technical deep-dives</h2>
+    <p class="section-desc">Work outside the day job — agentic systems, architecture experiments, and the occasional deep-dive into a paper worth implementing.</p>
+  </div>
+
+  <div class="projects-stack" style="display: flex; flex-direction: column; gap: var(--brand-size-xl);">
+    {sortedProjects.map((project) => (
+      <div class="project-showcase radius-lg reveal-on-scroll">
+        <div class="project-info">
+          <span style="font-family: var(--code-family); font-size: var(--brand-font-size-sm); letter-spacing: 0.06em; color: var(--brand-color-primary); font-weight: 700; text-transform: uppercase;">
+            {project.data.status}
+          </span>
+          <h3 style="font-size: var(--brand-font-size-heading-4); margin: var(--brand-size-xs) 0 var(--brand-size-sm)">
+            {project.data.title}
+          </h3>
+          <p style="color: var(--brand-color-text-secondary); margin-bottom: var(--brand-size-md); line-height: 1.5">
+            {project.data.description}
+          </p>
+          <div style="display: flex; gap: var(--brand-size-sm); flex-wrap: wrap;">
+            <a href={`/projects/${project.slug}`} class="btn btn-primary radius-lg">Read Technical Design Handoff</a>
+            {project.data.repoUrl && (
+              <a href={project.data.repoUrl} target="_blank" class="btn btn-secondary radius-lg">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                View GitHub Repo
+              </a>
+            )}
+          </div>
+        </div>
+
+        {(project.data.statHighlight || project.data.branch) && (
+          <div class="project-visual-preview radius-lg">
+            <div>
+              {project.data.statHighlight && (
+                <div style="font-family: var(--display-family); font-size: 40px; font-weight: 700; color: var(--brand-color-primary); line-height: 1;">
+                  {project.data.statHighlight}
+                </div>
+              )}
+              {project.data.statCaption && (
+                <div style="font-family: var(--code-family); font-size: var(--brand-font-size-sm); line-height: 1.5; color: var(--brand-color-text-secondary); margin-top: var(--brand-size-sm);">
+                  {project.data.statCaption}
+                </div>
+              )}
+            </div>
+            <div style="border-top: var(--brand-line-width) dashed var(--brand-color-border); padding-top: var(--brand-size-sm); font-size: 11px; display: flex; justify-content: space-between; align-items: center">
+              <span>{project.data.branch ? `Branch: ${project.data.branch}` : ''}</span>
+              <span style="color: var(--brand-color-text);">8-agent pipeline: built & tested</span>
+            </div>
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+</section>
