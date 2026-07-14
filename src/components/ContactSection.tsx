@@ -11,14 +11,16 @@ type ContactSectionProps = {
   formEndpoint?: string;
 };
 
-export default function ContactSection({
-  email = 'azharuddin.raz.kazi@gmail.com',
-  linkedinUrl = 'https://linkedin.com/in/azhar-kazi',
-  githubUrl = 'https://github.com/AzharuddinKazi',
-  location = 'Based in Dubai/Abu Dhabi, UAE (GST).',
-  responseTime = 'Inquiries are typically answered within 2 business days.',
-  formEndpoint = 'https://formspree.io/f/YOUR_FORM_ID',
-}: ContactSectionProps) {
+export default function ContactSection(props: ContactSectionProps) {
+  // Sanity returns null (not undefined) for schema fields left unset, and
+  // destructured default params don't apply to null -- only undefined --
+  // so the fallbacks below have to be explicit, not default parameters.
+  const email = props.email ?? 'azharuddin.raz.kazi@gmail.com';
+  const linkedinUrl = props.linkedinUrl ?? 'https://linkedin.com/in/azhar-kazi';
+  const githubUrl = props.githubUrl ?? 'https://github.com/AzharuddinKazi';
+  const location = props.location ?? 'Based in Dubai/Abu Dhabi, UAE (GST).';
+  const responseTime = props.responseTime ?? 'Inquiries are typically answered within 2 business days.';
+  const formEndpoint = props.formEndpoint ?? 'https://formspree.io/f/YOUR_FORM_ID';
   const [status, setStatus] = useState<{ text: string; color: string } | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
